@@ -14,16 +14,20 @@ resource_path = '/' + application_id.replace('.', '/')
 ### YARN ###
 
 yarn = find_program('yarn', required: true)
-run_command('yarn',
-  'config',
-  '--offline',
-  'set',
-  'yarn-offline-mirror',
-  get_option('prefix') / 'yarn-mirror',
-  env: { 'HOME': meson.project_build_root() },
-  check: true
-)
-yarn_args = ['--offline', '--use-yarnrc', meson.project_build_root() / '.yarnrc']
+yarn_args=[]
+offline_mirror = get_option('offline-mirror')
+if offline_mirror != ''
+  run_command('yarn',
+    'config',
+    '--offline',
+    'set',
+    'yarn-offline-mirror',
+    get_option('prefix') / 'yarn-mirror',
+    env: { 'HOME': meson.project_build_root() },
+    check: true
+  )
+  yarn_args += ['--offline', '--use-yarnrc', meson.project_build_root() / '.yarnrc']
+endif
 yarn_deps = custom_target('yarn-deps',
   command: [ yarn, 'install', yarn_args ],
   output: [ 'yarn-deps-out' ]

@@ -41,6 +41,9 @@
             "name" : "gnome-typescript-template",
             "builddir" : true,
             "buildsystem" : "meson",
+            "config-opts": [
+                "-Doffline-mirror=/app/yarn-mirror"
+            ],
             "modules": [
                 {
                     "name": "blueprint-compiler",
