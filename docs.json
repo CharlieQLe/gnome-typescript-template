@@ -5,7 +5,7 @@
         "propertyCase": "camel",
         "versionedOutput": true,
         "versionedImports": true,
-        "out": "./@types/gi-types"
+        "out": "./gi-types"
     },
     "libraries": {
         "Adw": [
