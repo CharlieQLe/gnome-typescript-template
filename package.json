@@ -1,0 +1,19 @@
+{
+  "name": "gnome-typescript-template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Charlie Le <20309750+CharlieQLe@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@gi.ts/cli": "^1.5.10",
+    "@gi.ts/lib": "^1.5.13"
+  },
+  "scripts": {
+    "compile:ts": "tsc --strict",
+    "generate:sources": "sh scripts/generate-sources.sh",
+    "generate:gi": "gi-ts generate"
+  }
+}

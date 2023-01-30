@@ -1,0 +1,6 @@
+data/io.github.charlieqle.GnomeTypescriptTemplate.desktop.in
+data/io.github.charlieqle.GnomeTypescriptTemplate.appdata.xml.in
+data/io.github.charlieqle.GnomeTypescriptTemplate.gschema.xml
+src/main.js
+src/window.js
+src/window.ui
