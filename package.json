@@ -15,6 +15,7 @@
     "compile:ts": "tsc --strict",
     "generate:sources": "sh scripts/generate-sources.sh",
     "generate:gi": "gi-ts generate",
-    "dependencies:flatpak": "sh scripts/flatpak-dependencies.sh"
+    "dependencies:flatpak": "sh scripts/flatpak-dependencies.sh",
+    "dependencies:fedora": "sh scripts/fedora-dependencies.sh"
   }
 }
