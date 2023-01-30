@@ -23,7 +23,7 @@ declare const console: {
     warn(...data: any): void;
 };
 
-declare module 'console' {
+declare module "console" {
     export function setConsoleLogDomain(domain: string);
     export function getConsoleLogDomain(): string;
     export const DEFAULT_LOG_DOMAIN: string;
@@ -34,7 +34,7 @@ declare class TextDecoder {
     fatal: boolean;
     ignoreBOM: boolean;
 
-    constructor(utfLabel: string = 'utf-8', options?: { fatal: boolean = false });
+    constructor(utfLabel: string = "utf-8", options?: { fatal: boolean = false });
 
     decode(buffer: ArrayBuffer | DataView | Uint8Array, options?: { fatal: boolean = false }): string;
 }
