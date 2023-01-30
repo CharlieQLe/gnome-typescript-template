@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Charlie Le <20309750+CharlieQLe@users.noreply.github.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "dependencies": {
     "typescript": "^4.9.4"
   },
