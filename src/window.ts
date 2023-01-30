@@ -22,10 +22,10 @@ import GObject from 'gi://GObject';
 import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
-export class GnomeTypescriptTemplateWindow extends Adw.ApplicationWindow {
+export class Window extends Adw.ApplicationWindow {
     static {
         GObject.registerClass({
-            GTypeName: 'GnomeTypescriptTemplateWindow',
+            GTypeName: 'Window',
             Template: 'resource:///io/github/charlieqle/GnomeTypescriptTemplate/ui/window.ui',
             InternalChildren: ['label'],
         }, this);

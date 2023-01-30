@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template GnomeTypescriptTemplateWindow : Adw.ApplicationWindow {
+template Window : Adw.ApplicationWindow {
   default-width: 600;
   default-height: 300;
 
@@ -40,7 +40,7 @@ menu primary_menu {
     }
 
     item {
-      label: _("_About Gnome-typescript-template");
+      label: _("_About Gnome Typescript Template");
       action: "app.about";
     }
   }

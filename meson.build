@@ -39,6 +39,12 @@ subdir('data')
 subdir('src')
 subdir('po')
 
+install_symlink(
+  meson.project_name(),
+  pointing_to: join_paths(get_option('prefix'), get_option('bindir'), application_id),
+  install_dir: join_paths(get_option('prefix'), get_option('bindir'))
+)
+
 gnome.post_install(
      glib_compile_schemas: true,
     gtk_update_icon_cache: true,

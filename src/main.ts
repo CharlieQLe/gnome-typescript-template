@@ -23,13 +23,13 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
-import { GnomeTypescriptTemplateWindow } from './window.js';
+import { Window } from "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/window.js";
 
 pkg.initGettext();
 pkg.initFormat();
 
-export class GnomeTypescriptTemplateApplication extends Adw.Application {
-    private _mainWindow: GnomeTypescriptTemplateWindow | null;
+export class Application extends Adw.Application {
+    private _mainWindow: Window | null;
 
     static {
         GObject.registerClass(this);
@@ -51,8 +51,8 @@ export class GnomeTypescriptTemplateApplication extends Adw.Application {
         show_about_action.connect('activate', action => {
             let aboutParams = {
                 transient_for: this._mainWindow,
-                application_name: pkg.name,
-                application_icon: 'io.github.charlieqle.GnomeTypescriptTemplate',
+                application_name: 'Gnome Typescript Template',
+                application_icon: pkg.name,
                 developer_name: 'Charlie Le',
                 version: pkg.version,
                 developers: [ 'Charlie Le' ],
@@ -65,12 +65,12 @@ export class GnomeTypescriptTemplateApplication extends Adw.Application {
     }
 
     vfunc_activate() {
-        if (this._mainWindow == null) this._mainWindow = new GnomeTypescriptTemplateWindow(this);
+        if (this._mainWindow == null) this._mainWindow = new Window(this);
         this._mainWindow.present();
     }
 }
 
 export function main(argv: string[]) {
-    const application = new GnomeTypescriptTemplateApplication();
+    const application = new Application();
     return application.run(argv);
 }

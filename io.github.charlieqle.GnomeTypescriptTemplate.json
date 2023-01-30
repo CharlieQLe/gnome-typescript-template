@@ -6,7 +6,7 @@
     "sdk-extensions": [
         "org.freedesktop.Sdk.Extension.node18"
     ],
-    "command" : "io.github.charlieqle.GnomeTypescriptTemplate",
+    "command" : "gnome-typescript-template",
     "finish-args" : [
         "--share=network",
         "--share=ipc",
