@@ -7,8 +7,7 @@
         "paths": {
             "*": [
                 "*",
-                "@types/*",
-                "@types/gi-types/*",
+                "gi-types/*"
             ],
             "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/*": [
                 "src/*"
@@ -23,13 +22,11 @@
             "ES2021"
         ],
         "typeRoots": [
-            "@types/*",
-            "@types/gi-types/*",
+            "gi-types/*"
         ]
     },
     "include": [
-        "@types/*",
-        "@types/gi-types/*",
+        "gi-types/*",
         "src/*"
     ]
 }
