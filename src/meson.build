@@ -2,14 +2,8 @@ gnome = import('gnome')
 
 ### TYPESCRIPT ###
 
-sources = files(
-  'main.ts',
-  'window.ts'
-)
-
 tsc_out = meson.project_build_root() / 'tsc-out'
 typescript = custom_target('typescript-compile',
-  input: sources,
   build_by_default: true,
   build_always_stale: true,
   command: [ yarn, yarn_args, 'run', 'compile:ts', '--outDir', tsc_out ],
