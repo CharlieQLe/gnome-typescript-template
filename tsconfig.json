@@ -27,6 +27,7 @@
     },
     "include": [
         "gi-types/*",
+        "src/**/",
         "src/*"
     ]
 }
