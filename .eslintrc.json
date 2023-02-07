@@ -38,10 +38,11 @@
         "indent": [ "warn", 4 ],
         "key-spacing": "warn",
         "array-bracket-spacing": "warn",
-        "space-before-function-paren": "warn",
+        "space-before-function-paren": ["warn", "never"],
         "space-before-blocks": "warn",
-        "object-curly-spacing": "warn",
+        "object-curly-spacing": [ "warn", "always" ],
         "func-call-spacing": "warn",
+        "keyword-spacing": "warn",
         "@typescript-eslint/no-unused-vars": [
             "warn", // or "error"
             { 

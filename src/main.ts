@@ -16,16 +16,16 @@ export class Application extends Adw.Application {
     }
 
     constructor() {
-        super({application_id: pkg.name, flags: Gio.ApplicationFlags.FLAGS_NONE});
+        super({ application_id: pkg.name, flags: Gio.ApplicationFlags.FLAGS_NONE });
 
         this._mainWindow = null;
 
-        const quit_action = new Gio.SimpleAction({name: 'quit'});
+        const quit_action = new Gio.SimpleAction({ name: 'quit' });
         quit_action.connect('activate', _ => this.quit());
         this.add_action(quit_action);
         this.set_accels_for_action('app.quit', ['<primary>q']);
 
-        const show_about_action = new Gio.SimpleAction({name: 'about'});
+        const show_about_action = new Gio.SimpleAction({ name: 'about' });
         show_about_action.connect('activate', _ => {
             const aboutWindow = new Adw.AboutWindow({
                 transient_for: this._mainWindow,
@@ -33,7 +33,7 @@ export class Application extends Adw.Application {
                 application_icon: pkg.name,
                 developer_name: 'Charlie Le',
                 version: pkg.version,
-                developers: [ 'Charlie Le' ],
+                developers: ['Charlie Le'],
                 copyright: '© 2023 Charlie Le'
             });
             aboutWindow.present();
