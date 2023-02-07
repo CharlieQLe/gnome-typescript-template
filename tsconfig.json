@@ -20,9 +20,6 @@
         "outDir": "_build",
         "lib": [
             "ES2021"
-        ],
-        "typeRoots": [
-            "gi-types/*"
         ]
     },
     "include": [
