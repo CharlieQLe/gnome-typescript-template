@@ -5,4 +5,4 @@ if ! command -v flatpak-node-generator > /dev/null ; then
     exit 1
 fi
 
-flatpak-node-generator yarn -r yarn.lock
+flatpak-node-generator yarn -r yarn.lock -o modules/yarn-deps/generated-sources.json

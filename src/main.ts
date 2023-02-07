@@ -26,7 +26,7 @@ export class Application extends Adw.Application {
         this.set_accels_for_action('app.quit', ['<primary>q']);
 
         const show_about_action = new Gio.SimpleAction({name: 'about'});
-        show_about_action.connect('activate', action => {
+        show_about_action.connect('activate', _ => {
             const aboutWindow = new Adw.AboutWindow({
                 transient_for: this._mainWindow,
                 application_name: 'GNOME Typescript Template',
@@ -42,7 +42,9 @@ export class Application extends Adw.Application {
     }
 
     vfunc_activate() {
-        if (this._mainWindow == null) this._mainWindow = new Window(this);
+        if (this._mainWindow == null) {
+            this._mainWindow = new Window(this);
+        }
         this._mainWindow.present();
     }
 }

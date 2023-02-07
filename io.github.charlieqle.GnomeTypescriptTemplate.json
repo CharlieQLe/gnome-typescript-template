@@ -27,17 +27,6 @@
     ],
     "modules" : [
         {
-            "name": "yarn-deps",
-            "buildsystem": "simple",
-            "build-commands": [
-                "/usr/lib/sdk/node18/enable.sh",
-                "cp -r $FLATPAK_BUILDER_BUILDDIR/flatpak-node/yarn-mirror/ /app"
-            ],
-            "sources": [
-                "generated-sources.json"
-            ]
-        },
-        {
             "name" : "gnome-typescript-template",
             "builddir" : true,
             "buildsystem" : "meson",
@@ -45,17 +34,8 @@
                 "-Doffline-mirror=/app/yarn-mirror"
             ],
             "modules": [
-                {
-                    "name": "blueprint-compiler",
-                    "buildsystem": "meson",
-                    "sources": [
-                        {
-                            "type": "git",
-                            "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-                            "tag": "v0.6.0"
-                        }
-                    ]
-                }
+                "modules/blueprint-compiler/blueprint-compiler.json",
+                "modules/yarn-deps/yarn-deps.json"
             ],
             "sources" : [
                 {
