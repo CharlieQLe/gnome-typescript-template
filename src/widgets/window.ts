@@ -7,7 +7,6 @@ export class Window extends Adw.ApplicationWindow {
         GObject.registerClass({
             GTypeName: 'Window',
             Template: 'resource:///io/github/charlieqle/GnomeTypescriptTemplate/ui/window.ui',
-            InternalChildren: ['label'],
         }, this);
     }
 
