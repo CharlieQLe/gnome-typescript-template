@@ -1,7 +1,7 @@
 {
   "name": "gnome-typescript-template",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "main": "src/main.js",
   "author": "Charlie Le <20309750+CharlieQLe@users.noreply.github.com>",
   "license": "GPL-3.0-only",
   "dependencies": {

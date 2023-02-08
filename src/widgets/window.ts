@@ -14,4 +14,3 @@ export class Window extends Adw.ApplicationWindow {
         super({ application });
     }
 }
-

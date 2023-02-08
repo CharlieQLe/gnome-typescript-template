@@ -16,7 +16,7 @@
         "no-promise-executor-return": "warn",
         "no-self-compare": "warn",
         "no-template-curly-in-string": "warn",
-        "no-use-before-define": "warn",
+        "no-use-before-define": "off",
         "require-atomic-updates": "warn",
         "no-tabs": "warn",
         "no-trailing-spaces": "warn",
