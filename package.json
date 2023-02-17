@@ -1,5 +1,6 @@
 {
   "name": "gnome-typescript-template",
+  "type": "module",
   "version": "0.1.0",
   "main": "src/main.js",
   "author": "Charlie Le <20309750+CharlieQLe@users.noreply.github.com>",

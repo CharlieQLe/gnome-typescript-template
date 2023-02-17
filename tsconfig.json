@@ -5,7 +5,10 @@
         "strict": true,
         "allowJs": true,
         "paths": {
-            "*": [ "gi-types/*" ],
+            "*": [
+                "@types/*",
+                "@types/gi-types/*"
+            ],
             "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/*": [ "src/*" ]
 	    },
 	    "target": "ES2021",
@@ -16,7 +19,8 @@
         "lib": [ "ES2021" ]
     },
     "include": [
-        "gi-types/*",
+        "@types/**/*",
+        "@types/*",
         "src/**/*",
         "src/*"
     ]

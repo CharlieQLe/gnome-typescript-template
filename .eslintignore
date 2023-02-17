@@ -1,2 +1,3 @@
-gi-types/*.d.ts
+@types/**/*
+@types/*
 _build/*
