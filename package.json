@@ -8,13 +8,6 @@
   "dependencies": {
     "typescript": "^4.9.4"
   },
-  "scripts": {
-    "compile:rollup": "rollup -c",
-    "compile:ts": "tsc --strict",
-    "generate:sources": "sh scripts/generate-sources.sh",
-    "dependencies:flatpak": "sh scripts/flatpak-dependencies.sh",
-    "dependencies:fedora": "sh scripts/fedora-dependencies.sh"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-json": "^6.0.0",
@@ -24,5 +17,12 @@
     "eslint": "^8.33.0",
     "rollup": "^3.16.0",
     "rollup-plugin-dts": "^5.2.0"
+  },
+  "scripts": {
+    "compile:rollup": "rollup -c",
+    "compile:ts": "tsc --strict",
+    "generate:sources": "sh scripts/generate-sources.sh",
+    "dependencies:flatpak": "sh scripts/flatpak-dependencies.sh",
+    "dependencies:fedora": "sh scripts/fedora-dependencies.sh"
   }
 }
