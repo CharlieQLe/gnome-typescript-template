@@ -27,7 +27,7 @@
         "dot-notation": "warn",
         "default-case-last": "warn",
         "default-param-last": "error",
-        "curly": "warn",
+        "curly": "off",
         "block-scoped-var": "warn",
         "comma-style": "warn",
         "comma-spacing": "warn",

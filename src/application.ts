@@ -4,7 +4,7 @@ import GLib from 'gi://GLib';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
-import { Window } from "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/widgets/window.js";
+import { Window } from "./widgets/window.js";
 
 export class Application extends Adw.Application {
     private _mainWindow: Window | null;
@@ -19,17 +19,15 @@ export class Application extends Adw.Application {
 
         // Add actions
         this._addAction('quit', _ => this.quit(), null);
-        this._addAction('about', _ => {
-            new Adw.AboutWindow({
-                transient_for: this._mainWindow,
-                application_name: 'GNOME Typescript Template',
-                application_icon: pkg.name,
-                developer_name: 'Charlie Le',
-                version: pkg.version,
-                developers: ['Charlie Le'],
-                copyright: '© 2023 Charlie Le'
-            }).present();
-        }, null);
+        this._addAction('about', _ => new Adw.AboutWindow({
+            transient_for: this._mainWindow,
+            application_name: 'GNOME Typescript Template',
+            application_icon: pkg.name,
+            developer_name: 'Charlie Le',
+            version: pkg.version,
+            developers: ['Charlie Le'],
+            copyright: '© 2023 Charlie Le'
+        }).present(), null);
 
         // Set accels
         this.set_accels_for_action('app.quit', ['<primary>q']);
@@ -47,9 +45,7 @@ export class Application extends Adw.Application {
     /// VFUNCS
 
     public vfunc_activate() {
-        if (this._mainWindow == null) {
-            this._mainWindow = new Window(this);
-        }
+        if (this._mainWindow == null) this._mainWindow = new Window(this);
         this._mainWindow.present();
     }
 }
