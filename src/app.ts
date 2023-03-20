@@ -4,10 +4,10 @@ import GLib from "gi://GLib";
 import Gtk from "gi://Gtk?version=4.0";
 import Adw from "gi://Adw?version=1";
 
-import { Window } from "./widgets/window.js";
+import { MainWindow } from "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/widgets/mainWindow.js";
 
-export class Application extends Adw.Application {
-    private _mainWindow: Window | null;
+export class TemplateApp extends Adw.Application {
+    private _mainWindow: MainWindow | null;
 
     static {
         GObject.registerClass(this);
@@ -45,7 +45,7 @@ export class Application extends Adw.Application {
     /// VFUNCS
 
     public vfunc_activate() {
-        if (this._mainWindow == null) this._mainWindow = new Window(this);
+        if (this._mainWindow == null) this._mainWindow = new MainWindow(this);
         this._mainWindow.present();
     }
 }
