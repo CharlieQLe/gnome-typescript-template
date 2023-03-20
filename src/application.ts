@@ -35,7 +35,7 @@ export class Application extends Adw.Application {
 
     /// FUNCS
 
-    private _addAction(name: string, callback: (action: Gio.SimpleAction, ...params: any[]) => void, parameterType: GLib.VariantType<any> | null) {
+    private _addAction(name: string, callback: (action: Gio.SimpleAction, ...params: any[]) => void, parameterType: GLib.VariantType | null) {
         const action = Gio.SimpleAction.new(name, parameterType);
         action.connect('activate', callback);
         this.add_action(action);
