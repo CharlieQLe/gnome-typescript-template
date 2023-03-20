@@ -4,12 +4,7 @@
     "plugins": ["@typescript-eslint"],
     "root": true,
     "rules": {
-        "array-callback-return": [
-            "warn",
-            {
-                "checkForEach": true
-            }
-        ],
+        "array-callback-return": "off",
         "no-constant-condition": "off",
         "no-constant-binary-expression": "warn",
         "no-constructor-return": "warn",
@@ -35,7 +30,7 @@
         "no-unused-vars": "off",
         "brace-style": "warn",
         "dot-location": [ "warn", "property" ],
-        "indent": [ "warn", 4 ],
+        "indent": [ "warn", 4, { "SwitchCase": 1 } ],
         "key-spacing": "warn",
         "array-bracket-spacing": "warn",
         "space-before-function-paren": ["warn", "never"],
