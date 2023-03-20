@@ -1,8 +1,8 @@
-import GObject from 'gi://GObject';
-import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
-import Gtk from 'gi://Gtk?version=4.0';
-import Adw from 'gi://Adw?version=1';
+import GObject from "gi://GObject";
+import Gio from "gi://Gio";
+import GLib from "gi://GLib";
+import Gtk from "gi://Gtk?version=4.0";
+import Adw from "gi://Adw?version=1";
 
 import { Window } from "./widgets/window.js";
 
@@ -18,26 +18,26 @@ export class Application extends Adw.Application {
         this._mainWindow = null;
 
         // Add actions
-        this._addAction('quit', _ => this.quit(), null);
-        this._addAction('about', _ => new Adw.AboutWindow({
+        this._addAction("quit", _ => this.quit(), null);
+        this._addAction("about", _ => new Adw.AboutWindow({
             transient_for: this._mainWindow,
-            application_name: 'GNOME Typescript Template',
+            application_name: "GNOME Typescript Template",
             application_icon: pkg.name,
-            developer_name: 'Charlie Le',
+            developer_name: "Charlie Le",
             version: pkg.version,
-            developers: ['Charlie Le'],
-            copyright: '© 2023 Charlie Le'
+            developers: ["Charlie Le"],
+            copyright: "© 2023 Charlie Le"
         }).present(), null);
 
         // Set accels
-        this.set_accels_for_action('app.quit', ['<primary>q']);
+        this.set_accels_for_action("app.quit", ["<primary>q"]);
     }
 
     /// FUNCS
 
     private _addAction(name: string, callback: (action: Gio.SimpleAction, ...params: any[]) => void, parameterType: GLib.VariantType | null) {
         const action = Gio.SimpleAction.new(name, parameterType);
-        action.connect('activate', callback);
+        action.connect("activate", callback);
         this.add_action(action);
         return action;
     }
