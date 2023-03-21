@@ -16,11 +16,13 @@
     "@typescript-eslint/parser": "^5.51.0",
     "eslint": "^8.33.0",
     "rollup": "^3.16.0",
-    "rollup-plugin-dts": "^5.2.0"
+    "rollup-plugin-dts": "^5.2.0",
+    "@ts-for-gir/cli": "^3.0.0-beta.12"
   },
   "scripts": {
     "compile:rollup": "rollup -c",
     "compile:ts": "tsc --strict",
+    "generate:gi": "ts-for-gir generate --configName='.ts-for-girrc.js'",
     "generate:sources": "sh scripts/generate-sources.sh",
     "dependencies:flatpak": "sh scripts/flatpak-dependencies.sh",
     "dependencies:fedora": "sh scripts/fedora-dependencies.sh"
