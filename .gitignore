@@ -2,3 +2,4 @@ node_modules/*
 .flatpak/*
 /subprojects/blueprint-compiler
 /*.log
+.vscode/*
