@@ -22,7 +22,7 @@
   "scripts": {
     "compile:rollup": "rollup -c",
     "compile:ts": "tsc --strict",
-    "generate:gi": "ts-for-gir generate '*' -e gjs -a --promisify -b types",
+    "generate:gi": "ts-for-gir generate --configName='.ts-for-girrc.js'",
     "generate:sources": "sh scripts/generate-sources.sh",
     "dependencies:flatpak": "sh scripts/flatpak-dependencies.sh",
     "dependencies:fedora": "sh scripts/fedora-dependencies.sh"
