@@ -279,7 +279,7 @@ declare global {
         logDomain: string
     }
 
-    
+    const pkg: typeof Gjs.Package
     const console: Console
     
 
