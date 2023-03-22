@@ -7,50 +7,78 @@
 
 import type * as Gjs from './Gjs.js'
 import type Adw1 from "./Adw-1.js";
-import type AppIndicator301 from "./AppIndicator3-0.1.js";
+import type AppStreamGlib10 from "./AppStreamGlib-1.0.js";
 import type Atk10 from "./Atk-1.0.js";
 import type Atspi20 from "./Atspi-2.0.js";
-import type CloudProviders03 from "./CloudProviders-0.3.js";
 import type DBus10 from "./DBus-1.0.js";
 import type DBusGLib10 from "./DBusGLib-1.0.js";
-import type Dbusmenu04 from "./Dbusmenu-0.4.js";
+import type GCab10 from "./GCab-1.0.js";
 import type GDesktopEnums30 from "./GDesktopEnums-3.0.js";
 import type GIRepository20 from "./GIRepository-2.0.js";
 import type GL10 from "./GL-1.0.js";
 import type GLib20 from "./GLib-2.0.js";
 import type GModule20 from "./GModule-2.0.js";
 import type GObject20 from "./GObject-2.0.js";
+import type GUdev10 from "./GUdev-1.0.js";
+import type Gck2 from "./Gck-2.js";
+import type Gcr4 from "./Gcr-4.js";
 import type Gdk40 from "./Gdk-4.0.js";
 import type GdkPixbuf20 from "./GdkPixbuf-2.0.js";
 import type GdkPixdata20 from "./GdkPixdata-2.0.js";
 import type GdkWayland40 from "./GdkWayland-4.0.js";
 import type GdkX1140 from "./GdkX11-4.0.js";
+import type Gee08 from "./Gee-0.8.js";
+import type Geoclue20 from "./Geoclue-2.0.js";
 import type Gio20 from "./Gio-2.0.js";
-import type GnomeAutoar01 from "./GnomeAutoar-0.1.js";
-import type GnomeAutoarGtk01 from "./GnomeAutoarGtk-0.1.js";
 import type Graphene10 from "./Graphene-1.0.js";
 import type Gsk40 from "./Gsk-4.0.js";
 import type Gst10 from "./Gst-1.0.js";
+import type GstAllocators10 from "./GstAllocators-1.0.js";
+import type GstApp10 from "./GstApp-1.0.js";
+import type GstAudio10 from "./GstAudio-1.0.js";
+import type GstBadAudio10 from "./GstBadAudio-1.0.js";
 import type GstBase10 from "./GstBase-1.0.js";
 import type GstCheck10 from "./GstCheck-1.0.js";
+import type GstCodecs10 from "./GstCodecs-1.0.js";
 import type GstController10 from "./GstController-1.0.js";
+import type GstGL10 from "./GstGL-1.0.js";
+import type GstGLEGL10 from "./GstGLEGL-1.0.js";
+import type GstGLWayland10 from "./GstGLWayland-1.0.js";
+import type GstGLX1110 from "./GstGLX11-1.0.js";
+import type GstInsertBin10 from "./GstInsertBin-1.0.js";
+import type GstMpegts10 from "./GstMpegts-1.0.js";
 import type GstNet10 from "./GstNet-1.0.js";
+import type GstPbutils10 from "./GstPbutils-1.0.js";
+import type GstPlay10 from "./GstPlay-1.0.js";
+import type GstPlayer10 from "./GstPlayer-1.0.js";
+import type GstRtp10 from "./GstRtp-1.0.js";
+import type GstRtsp10 from "./GstRtsp-1.0.js";
+import type GstSdp10 from "./GstSdp-1.0.js";
+import type GstTag10 from "./GstTag-1.0.js";
+import type GstTranscoder10 from "./GstTranscoder-1.0.js";
+import type GstVideo10 from "./GstVideo-1.0.js";
+import type GstVulkan10 from "./GstVulkan-1.0.js";
+import type GstVulkanWayland10 from "./GstVulkanWayland-1.0.js";
+import type GstVulkanXCB10 from "./GstVulkanXCB-1.0.js";
+import type GstWebRTC10 from "./GstWebRTC-1.0.js";
 import type Gtk40 from "./Gtk-4.0.js";
-import type GtkLayerShell01 from "./GtkLayerShell-0.1.js";
 import type GtkSource5 from "./GtkSource-5.js";
+import type Handy1 from "./Handy-1.js";
 import type HarfBuzz00 from "./HarfBuzz-0.0.js";
-import type ICal30 from "./ICal-3.0.js";
-import type ICalGLib30 from "./ICalGLib-3.0.js";
+import type IBus10 from "./IBus-1.0.js";
 import type JavaScriptCore60 from "./JavaScriptCore-6.0.js";
 import type Json10 from "./Json-1.0.js";
 import type Manette02 from "./Manette-0.2.js";
+import type Nice01 from "./Nice-0.1.js";
 import type Notify07 from "./Notify-0.7.js";
 import type Pango10 from "./Pango-1.0.js";
 import type PangoCairo10 from "./PangoCairo-1.0.js";
 import type PangoFT210 from "./PangoFT2-1.0.js";
 import type PangoFc10 from "./PangoFc-1.0.js";
 import type PangoOT10 from "./PangoOT-1.0.js";
-import type PangoXft10 from "./PangoXft-1.0.js";
+import type Polkit10 from "./Polkit-1.0.js";
+import type Rsvg20 from "./Rsvg-2.0.js";
+import type Secret1 from "./Secret-1.js";
 import type Soup30 from "./Soup-3.0.js";
 import type Tracker30 from "./Tracker-3.0.js";
 import type Vulkan10 from "./Vulkan-1.0.js";
@@ -608,50 +636,78 @@ declare global {
     const imports: typeof Gjs & {
         gi: {
               Adw:                typeof Adw1
-              AppIndicator3:                typeof AppIndicator301
+              AppStreamGlib:                typeof AppStreamGlib10
               Atk:                typeof Atk10
               Atspi:                typeof Atspi20
-              CloudProviders:                typeof CloudProviders03
               DBus:                typeof DBus10
               DBusGLib:                typeof DBusGLib10
-              Dbusmenu:                typeof Dbusmenu04
+              GCab:                typeof GCab10
               GDesktopEnums:                typeof GDesktopEnums30
               GIRepository:                typeof GIRepository20
               GL:                typeof GL10
               GLib:                typeof GLib20
               GModule:                typeof GModule20
               GObject:                typeof GObject20
+              GUdev:                typeof GUdev10
+              Gck:                typeof Gck2
+              Gcr:                typeof Gcr4
               Gdk:                typeof Gdk40
               GdkPixbuf:                typeof GdkPixbuf20
               GdkPixdata:                typeof GdkPixdata20
               GdkWayland:                typeof GdkWayland40
               GdkX11:                typeof GdkX1140
+              Gee:                typeof Gee08
+              Geoclue:                typeof Geoclue20
               Gio:                typeof Gio20
-              GnomeAutoar:                typeof GnomeAutoar01
-              GnomeAutoarGtk:                typeof GnomeAutoarGtk01
               Graphene:                typeof Graphene10
               Gsk:                typeof Gsk40
               Gst:                typeof Gst10
+              GstAllocators:                typeof GstAllocators10
+              GstApp:                typeof GstApp10
+              GstAudio:                typeof GstAudio10
+              GstBadAudio:                typeof GstBadAudio10
               GstBase:                typeof GstBase10
               GstCheck:                typeof GstCheck10
+              GstCodecs:                typeof GstCodecs10
               GstController:                typeof GstController10
+              GstGL:                typeof GstGL10
+              GstGLEGL:                typeof GstGLEGL10
+              GstGLWayland:                typeof GstGLWayland10
+              GstGLX11:                typeof GstGLX1110
+              GstInsertBin:                typeof GstInsertBin10
+              GstMpegts:                typeof GstMpegts10
               GstNet:                typeof GstNet10
+              GstPbutils:                typeof GstPbutils10
+              GstPlay:                typeof GstPlay10
+              GstPlayer:                typeof GstPlayer10
+              GstRtp:                typeof GstRtp10
+              GstRtsp:                typeof GstRtsp10
+              GstSdp:                typeof GstSdp10
+              GstTag:                typeof GstTag10
+              GstTranscoder:                typeof GstTranscoder10
+              GstVideo:                typeof GstVideo10
+              GstVulkan:                typeof GstVulkan10
+              GstVulkanWayland:                typeof GstVulkanWayland10
+              GstVulkanXCB:                typeof GstVulkanXCB10
+              GstWebRTC:                typeof GstWebRTC10
               Gtk:                typeof Gtk40
-              GtkLayerShell:                typeof GtkLayerShell01
               GtkSource:                typeof GtkSource5
+              Handy:                typeof Handy1
               HarfBuzz:                typeof HarfBuzz00
-              ICal:                typeof ICal30
-              ICalGLib:                typeof ICalGLib30
+              IBus:                typeof IBus10
               JavaScriptCore:                typeof JavaScriptCore60
               Json:                typeof Json10
               Manette:                typeof Manette02
+              Nice:                typeof Nice01
               Notify:                typeof Notify07
               Pango:                typeof Pango10
               PangoCairo:                typeof PangoCairo10
               PangoFT2:                typeof PangoFT210
               PangoFc:                typeof PangoFc10
               PangoOT:                typeof PangoOT10
-              PangoXft:                typeof PangoXft10
+              Polkit:                typeof Polkit10
+              Rsvg:                typeof Rsvg20
+              Secret:                typeof Secret1
               Soup:                typeof Soup30
               Tracker:                typeof Tracker30
               Vulkan:                typeof Vulkan10
@@ -668,50 +724,78 @@ declare global {
               xrandr:                typeof Xrandr13
             versions: {
                   Adw:                    '1'
-                  AppIndicator3:                    '0.1'
+                  AppStreamGlib:                    '1.0'
                   Atk:                    '1.0'
                   Atspi:                    '2.0'
-                  CloudProviders:                    '0.3'
                   DBus:                    '1.0'
                   DBusGLib:                    '1.0'
-                  Dbusmenu:                    '0.4'
+                  GCab:                    '1.0'
                   GDesktopEnums:                    '3.0'
                   GIRepository:                    '2.0'
                   GL:                    '1.0'
                   GLib:                    '2.0'
                   GModule:                    '2.0'
                   GObject:                    '2.0'
+                  GUdev:                    '1.0'
+                  Gck:                    '2'
+                  Gcr:                    '4'
                   Gdk:                    '4.0'
                   GdkPixbuf:                    '2.0'
                   GdkPixdata:                    '2.0'
                   GdkWayland:                    '4.0'
                   GdkX11:                    '4.0'
+                  Gee:                    '0.8'
+                  Geoclue:                    '2.0'
                   Gio:                    '2.0'
-                  GnomeAutoar:                    '0.1'
-                  GnomeAutoarGtk:                    '0.1'
                   Graphene:                    '1.0'
                   Gsk:                    '4.0'
                   Gst:                    '1.0'
+                  GstAllocators:                    '1.0'
+                  GstApp:                    '1.0'
+                  GstAudio:                    '1.0'
+                  GstBadAudio:                    '1.0'
                   GstBase:                    '1.0'
                   GstCheck:                    '1.0'
+                  GstCodecs:                    '1.0'
                   GstController:                    '1.0'
+                  GstGL:                    '1.0'
+                  GstGLEGL:                    '1.0'
+                  GstGLWayland:                    '1.0'
+                  GstGLX11:                    '1.0'
+                  GstInsertBin:                    '1.0'
+                  GstMpegts:                    '1.0'
                   GstNet:                    '1.0'
+                  GstPbutils:                    '1.0'
+                  GstPlay:                    '1.0'
+                  GstPlayer:                    '1.0'
+                  GstRtp:                    '1.0'
+                  GstRtsp:                    '1.0'
+                  GstSdp:                    '1.0'
+                  GstTag:                    '1.0'
+                  GstTranscoder:                    '1.0'
+                  GstVideo:                    '1.0'
+                  GstVulkan:                    '1.0'
+                  GstVulkanWayland:                    '1.0'
+                  GstVulkanXCB:                    '1.0'
+                  GstWebRTC:                    '1.0'
                   Gtk:                    '4.0'
-                  GtkLayerShell:                    '0.1'
                   GtkSource:                    '5'
+                  Handy:                    '1'
                   HarfBuzz:                    '0.0'
-                  ICal:                    '3.0'
-                  ICalGLib:                    '3.0'
+                  IBus:                    '1.0'
                   JavaScriptCore:                    '6.0'
                   Json:                    '1.0'
                   Manette:                    '0.2'
+                  Nice:                    '0.1'
                   Notify:                    '0.7'
                   Pango:                    '1.0'
                   PangoCairo:                    '1.0'
                   PangoFT2:                    '1.0'
                   PangoFc:                    '1.0'
                   PangoOT:                    '1.0'
-                  PangoXft:                    '1.0'
+                  Polkit:                    '1.0'
+                  Rsvg:                    '2.0'
+                  Secret:                    '1'
                   Soup:                    '3.0'
                   Tracker:                    '3.0'
                   Vulkan:                    '1.0'

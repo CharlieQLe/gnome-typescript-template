@@ -320,6 +320,9 @@ interface WaylandMonitor {
     connect(sigName: "notify::connector", callback: (($obj: WaylandMonitor, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::connector", callback: (($obj: WaylandMonitor, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::connector", ...args: any[]): void
+    connect(sigName: "notify::description", callback: (($obj: WaylandMonitor, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::description", callback: (($obj: WaylandMonitor, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::description", ...args: any[]): void
     connect(sigName: "notify::display", callback: (($obj: WaylandMonitor, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::display", callback: (($obj: WaylandMonitor, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::display", ...args: any[]): void

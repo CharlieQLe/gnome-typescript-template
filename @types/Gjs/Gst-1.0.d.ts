@@ -12551,11 +12551,7 @@ interface Object {
     // Own fields of Gst-1.0.Gst.Object
 
     object: GObject.InitiallyUnowned
-    /**
-     * object LOCK
-     * @field 
-     */
-    lock: GLib.Mutex
+    // Has conflict: lock: GLib.Mutex
     /**
      * The name of the object
      * @field 

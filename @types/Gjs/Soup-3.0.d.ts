@@ -958,6 +958,9 @@ function check_version(major: number, minor: number, micro: number): boolean
  * valid state for a #SoupCookie, and you will need to fill in some
  * appropriate string for the domain if you want to actually make use
  * of the cookie.
+ * 
+ * As of version 3.4.0 the default value of a cookie's same-site-policy
+ * is %SOUP_SAME_SITE_POLICY_LAX.
  * @param header a cookie string (eg, the value of a Set-Cookie header)
  * @param origin origin of the cookie
  * @returns a new #SoupCookie, or %NULL if it could   not be parsed, or contained an illegal "domain" attribute for a   cookie originating from @origin.
@@ -4013,6 +4016,13 @@ module Message {
     }
 
     /**
+     * Signal callback interface for `got-body-data`
+     */
+    interface GotBodyDataSignalCallback {
+        ($obj: Message, chunk_size: number): void
+    }
+
+    /**
      * Signal callback interface for `got-headers`
      */
     interface GotHeadersSignalCallback {
@@ -4265,6 +4275,11 @@ interface Message {
      */
     get_flags(): MessageFlags
     /**
+     * Returns whether HTTP/1 version is currently demanded for the `msg` send.
+     * @returns %TRUE, when HTTP/1 is demanded, %FALSE otherwise.
+     */
+    get_force_http1(): boolean
+    /**
      * Gets the HTTP version of `msg`.
      * 
      * This is the minimum of the version from the request and the version from the
@@ -4415,6 +4430,14 @@ interface Message {
      */
     set_flags(flags: MessageFlags): void
     /**
+     * Sets whether HTTP/1 version should be used when sending this message.
+     * Some connections can still override it, if needed.
+     * 
+     * Note the value is unset after the message send is finished.
+     * @param value value to set
+     */
+    set_force_http1(value: boolean): void
+    /**
      * Set whether `msg` is intended to be used to send `OPTIONS *` to a server.
      * 
      * When set to %TRUE, the path of [property`Message:`uri] will be ignored and
@@ -4533,6 +4556,9 @@ interface Message {
     connect(sigName: "got-body", callback: Message.GotBodySignalCallback): number
     connect_after(sigName: "got-body", callback: Message.GotBodySignalCallback): number
     emit(sigName: "got-body", ...args: any[]): void
+    connect(sigName: "got-body-data", callback: Message.GotBodyDataSignalCallback): number
+    connect_after(sigName: "got-body-data", callback: Message.GotBodyDataSignalCallback): number
+    emit(sigName: "got-body-data", chunk_size: number, ...args: any[]): void
     connect(sigName: "got-headers", callback: Message.GotHeadersSignalCallback): number
     connect_after(sigName: "got-headers", callback: Message.GotHeadersSignalCallback): number
     emit(sigName: "got-headers", ...args: any[]): void
@@ -6402,6 +6428,56 @@ interface Session {
      */
     send_and_read_finish(result: Gio.AsyncResult): GLib.Bytes
     /**
+     * Synchronously sends `msg` and splices the response body stream into `out_stream`.
+     * 
+     * See [method`Session`.send] for more details on the general semantics.
+     * @param msg a #SoupMessage
+     * @param out_stream a #GOutputStream
+     * @param flags a set of #GOutputStreamSpliceFlags
+     * @param cancellable a #GCancellable
+     * @returns a #gssize containing the size of the data spliced, or -1 if an error occurred.
+     */
+    send_and_splice(msg: Message, out_stream: Gio.OutputStream, flags: Gio.OutputStreamSpliceFlags, cancellable: Gio.Cancellable | null): number
+    /**
+     * Asynchronously sends `msg` and splices the response body stream into `out_stream`.
+     * When `callback` is called, then either `msg` has been sent and its response body
+     * spliced, or else an error has occurred.
+     * 
+     * See [method`Session`.send] for more details on the general semantics.
+     * @param msg a #SoupMessage
+     * @param out_stream a #GOutputStream
+     * @param flags a set of #GOutputStreamSpliceFlags
+     * @param io_priority the I/O priority of the request
+     * @param cancellable a #GCancellable
+     * @param callback the callback to invoke
+     */
+    send_and_splice_async(msg: Message, out_stream: Gio.OutputStream, flags: Gio.OutputStreamSpliceFlags, io_priority: number, cancellable: Gio.Cancellable | null, callback: Gio.AsyncReadyCallback<this> | null): void
+
+    // Overloads of send_and_splice_async
+
+    /**
+     * Promisified version of {@link send_and_splice_async}
+     * 
+     * Asynchronously sends `msg` and splices the response body stream into `out_stream`.
+     * When `callback` is called, then either `msg` has been sent and its response body
+     * spliced, or else an error has occurred.
+     * 
+     * See [method`Session`.send] for more details on the general semantics.
+     * @param msg a #SoupMessage
+     * @param out_stream a #GOutputStream
+     * @param flags a set of #GOutputStreamSpliceFlags
+     * @param io_priority the I/O priority of the request
+     * @param cancellable a #GCancellable
+     * @returns A Promise of: a #gssize containing the size of the data spliced, or -1 if an error occurred.
+     */
+    send_and_splice_async(msg: Message, out_stream: Gio.OutputStream, flags: Gio.OutputStreamSpliceFlags, io_priority: number, cancellable: Gio.Cancellable | null): globalThis.Promise<number>
+    /**
+     * Gets the response to a [method`Session`.send_and_splice_async].
+     * @param result the #GAsyncResult passed to your callback
+     * @returns a #gssize containing the size of the data spliced, or -1 if an error occurred.
+     */
+    send_and_splice_finish(result: Gio.AsyncResult): number
+    /**
      * Asynchronously sends `msg` and waits for the beginning of a response.
      * 
      * When `callback` is called, then either `msg` has been sent, and its response
@@ -7682,6 +7758,9 @@ class Cookie {
      * multiples thereof) to calculate this value. (If you really care
      * about setting the exact time that the cookie will expire, use
      * [method`Cookie`.set_expires].)
+     * 
+     * As of version 3.4.0 the default value of a cookie's same-site-policy
+     * is %SOUP_SAME_SITE_POLICY_LAX.
      * @constructor 
      * @param name cookie name
      * @param value cookie value
@@ -7710,6 +7789,9 @@ class Cookie {
      * multiples thereof) to calculate this value. (If you really care
      * about setting the exact time that the cookie will expire, use
      * [method`Cookie`.set_expires].)
+     * 
+     * As of version 3.4.0 the default value of a cookie's same-site-policy
+     * is %SOUP_SAME_SITE_POLICY_LAX.
      * @constructor 
      * @param name cookie name
      * @param value cookie value
@@ -7730,6 +7812,9 @@ class Cookie {
      * valid state for a #SoupCookie, and you will need to fill in some
      * appropriate string for the domain if you want to actually make use
      * of the cookie.
+     * 
+     * As of version 3.4.0 the default value of a cookie's same-site-policy
+     * is %SOUP_SAME_SITE_POLICY_LAX.
      * @param header a cookie string (eg, the value of a Set-Cookie header)
      * @param origin origin of the cookie
      * @returns a new #SoupCookie, or %NULL if it could   not be parsed, or contained an illegal "domain" attribute for a   cookie originating from @origin.
@@ -8750,7 +8835,7 @@ interface MessageMetrics {
  * An event can be 0 because it hasn't happened yet, because it's optional or
  * because the load failed before the event reached.
  * 
- * Size metrics are expressed in bytes and aree updated while the [class`Message]` is
+ * Size metrics are expressed in bytes and are updated while the [class`Message]` is
  * being loaded. You can connect to different [class`Message]` signals to get the
  * final result of every value.
  * @record 
