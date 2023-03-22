@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gnome-typescript-template">
+	<enum id="io.github.charlieqle.GnomeTypescriptTemplate.enum_theme">
+		<value nick="system" value="0"/>
+		<value nick="light" value="1"/>
+		<value nick="dark" value="2"/>
+	</enum>
 	<schema id="io.github.charlieqle.GnomeTypescriptTemplate" path="/io/github/charlieqle/GnomeTypescriptTemplate/">
+		<key name="theme" enum="io.github.charlieqle.GnomeTypescriptTemplate.enum_theme">
+			<default>"system"</default>
+			<summary>Theme</summary>
+			<description>The theme color to use</description>
+		</key>
 	</schema>
 </schemalist>

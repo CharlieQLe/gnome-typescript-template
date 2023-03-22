@@ -1,0 +1,21 @@
+using Gtk 4.0;
+using Adw 1;
+
+template SettingsWindow : Adw.PreferencesWindow {
+    Adw.PreferencesPage {
+        Adw.PreferencesGroup {
+            Adw.ComboRow themeCombo {
+                title: "Theme";
+                subtitle: "The color scheme to follow";
+                model: Gtk.StringList {
+                    strings [
+                        "System",
+                        "Light",
+                        "Dark"
+                    ]
+                };
+                notify::selected => $onThemeChanged();
+            }
+        }
+    }
+}
