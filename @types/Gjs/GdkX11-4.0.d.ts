@@ -718,6 +718,9 @@ interface X11Monitor {
     connect(sigName: "notify::connector", callback: (($obj: X11Monitor, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::connector", callback: (($obj: X11Monitor, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::connector", ...args: any[]): void
+    connect(sigName: "notify::description", callback: (($obj: X11Monitor, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::description", callback: (($obj: X11Monitor, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::description", ...args: any[]): void
     connect(sigName: "notify::display", callback: (($obj: X11Monitor, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::display", callback: (($obj: X11Monitor, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::display", ...args: any[]): void

@@ -178,6 +178,29 @@ enum GLUniformType {
     VEC4,
 }
 /**
+ * The mask modes available for mask nodes.
+ */
+enum MaskMode {
+    /**
+     * Use the alpha channel of the mask
+     */
+    ALPHA,
+    /**
+     * Use the inverted alpha channel of the mask
+     */
+    INVERTED_ALPHA,
+    /**
+     * Use the luminance of the mask,
+     *     multiplied by mask alpha
+     */
+    LUMINANCE,
+    /**
+     * Use the inverted luminance of the mask,
+     *     multiplied by mask alpha
+     */
+    INVERTED_LUMINANCE,
+}
+/**
  * The type of a node determines what the node is rendering.
  */
 enum RenderNodeType {
@@ -285,6 +308,14 @@ enum RenderNodeType {
      * A node that uses OpenGL fragment shaders to render
      */
     GL_SHADER_NODE,
+    /**
+     * A node drawing a `GdkTexture` scaled and filtered (Since: 4.10)
+     */
+    TEXTURE_SCALE_NODE,
+    /**
+     * A node that masks one child with another (Since: 4.10)
+     */
+    MASK_NODE,
 }
 /**
  * The filters used when scaling texture data.
@@ -1492,7 +1523,7 @@ interface GLShader {
  * ```
  * 
  * This samples a texture (e.g. u_texture1) at the specified
- * coordinates, and containes some helper ifdefs to ensure that
+ * coordinates, and contains some helper ifdefs to ensure that
  * it works on all OpenGL versions.
  * 
  * You can compile the shader yourself using [method`Gsk`.GLShader.compile],
@@ -1779,6 +1810,67 @@ class LinearGradientNode extends RenderNode {
     static new(bounds: Graphene.Rect, start: Graphene.Point, end: Graphene.Point, color_stops: ColorStop[]): LinearGradientNode
 }
 
+interface MaskNode {
+
+    // Owm methods of Gsk-4.0.Gsk.MaskNode
+
+    /**
+     * Retrieves the mask `GskRenderNode` child of the `node`.
+     * @returns the mask child node
+     */
+    get_mask(): RenderNode
+    /**
+     * Retrieves the mask mode used by `node`.
+     * @returns the mask mode
+     */
+    get_mask_mode(): MaskMode
+    /**
+     * Retrieves the source `GskRenderNode` child of the `node`.
+     * @returns the source child node
+     */
+    get_source(): RenderNode
+}
+
+/**
+ * A render node masking one child node with another.
+ * @class 
+ */
+class MaskNode extends RenderNode {
+
+    // Own properties of Gsk-4.0.Gsk.MaskNode
+
+    static name: string
+
+    // Constructors of Gsk-4.0.Gsk.MaskNode
+
+    /**
+     * Creates a `GskRenderNode` that will mask a given node by another.
+     * 
+     * The `mask_mode` determines how the 'mask values' are derived from
+     * the colors of the `mask`. Applying the mask consists of multiplying
+     * the 'mask value' with the alpha of the source.
+     * @constructor 
+     * @param source The source node to be drawn
+     * @param mask The node to be used as mask
+     * @param mask_mode The mask mode to use
+     * @returns A new `GskRenderNode`
+     */
+    constructor(source: RenderNode, mask: RenderNode, mask_mode: MaskMode) 
+    /**
+     * Creates a `GskRenderNode` that will mask a given node by another.
+     * 
+     * The `mask_mode` determines how the 'mask values' are derived from
+     * the colors of the `mask`. Applying the mask consists of multiplying
+     * the 'mask value' with the alpha of the source.
+     * @constructor 
+     * @param source The source node to be drawn
+     * @param mask The node to be used as mask
+     * @param mask_mode The mask mode to use
+     * @returns A new `GskRenderNode`
+     */
+    static new(source: RenderNode, mask: RenderNode, mask_mode: MaskMode): MaskNode
+}
+
 module NglRenderer {
 
     // Constructor properties interface
@@ -1973,7 +2065,7 @@ interface RadialGradientNode {
      */
     get_end(): number
     /**
-     * Retrieves the horizonal radius for the gradient.
+     * Retrieves the horizontal radius for the gradient.
      * @returns the horizontal radius for the gradient
      */
     get_hradius(): number
@@ -2011,7 +2103,7 @@ class RadialGradientNode extends RenderNode {
      * 
      * The radial gradient
      * starts around `center`. The size of the gradient is dictated by `hradius`
-     * in horizontal orientation and by `vradius` in vertial orientation.
+     * in horizontal orientation and by `vradius` in vertical orientation.
      * @constructor 
      * @param bounds the bounds of the node
      * @param center the center of the gradient
@@ -2028,7 +2120,7 @@ class RadialGradientNode extends RenderNode {
      * 
      * The radial gradient
      * starts around `center`. The size of the gradient is dictated by `hradius`
-     * in horizontal orientation and by `vradius` in vertial orientation.
+     * in horizontal orientation and by `vradius` in vertical orientation.
      * @constructor 
      * @param bounds the bounds of the node
      * @param center the center of the gradient
@@ -2392,7 +2484,7 @@ class RepeatingRadialGradientNode extends RenderNode {
      * 
      * The radial gradient starts around `center`. The size of the gradient
      * is dictated by `hradius` in horizontal orientation and by `vradius`
-     * in vertial orientation.
+     * in vertical orientation.
      * @constructor 
      * @param bounds the bounds of the node
      * @param center the center of the gradient
@@ -2409,7 +2501,7 @@ class RepeatingRadialGradientNode extends RenderNode {
      * 
      * The radial gradient starts around `center`. The size of the gradient
      * is dictated by `hradius` in horizontal orientation and by `vradius`
-     * in vertial orientation.
+     * in vertical orientation.
      * @constructor 
      * @param bounds the bounds of the node
      * @param center the center of the gradient
@@ -2627,6 +2719,10 @@ class TextureNode extends RenderNode {
     /**
      * Creates a `GskRenderNode` that will render the given
      * `texture` into the area given by `bounds`.
+     * 
+     * Note that GSK applies linear filtering when textures are
+     * scaled and transformed. See [class`Gsk`.TextureScaleNode]
+     * for a way to influence filtering.
      * @constructor 
      * @param texture the `GdkTexture`
      * @param bounds the rectangle to render the texture into
@@ -2636,12 +2732,86 @@ class TextureNode extends RenderNode {
     /**
      * Creates a `GskRenderNode` that will render the given
      * `texture` into the area given by `bounds`.
+     * 
+     * Note that GSK applies linear filtering when textures are
+     * scaled and transformed. See [class`Gsk`.TextureScaleNode]
+     * for a way to influence filtering.
      * @constructor 
      * @param texture the `GdkTexture`
      * @param bounds the rectangle to render the texture into
      * @returns A new `GskRenderNode`
      */
     static new(texture: Gdk.Texture, bounds: Graphene.Rect): TextureNode
+}
+
+interface TextureScaleNode {
+
+    // Owm methods of Gsk-4.0.Gsk.TextureScaleNode
+
+    /**
+     * Retrieves the `GskScalingFilter` used when creating this `GskRenderNode`.
+     * @returns the `GskScalingFilter`
+     */
+    get_filter(): ScalingFilter
+    /**
+     * Retrieves the `GdkTexture` used when creating this `GskRenderNode`.
+     * @returns the `GdkTexture`
+     */
+    get_texture(): Gdk.Texture
+}
+
+/**
+ * A render node for a `GdkTexture`.
+ * @class 
+ */
+class TextureScaleNode extends RenderNode {
+
+    // Own properties of Gsk-4.0.Gsk.TextureScaleNode
+
+    static name: string
+
+    // Constructors of Gsk-4.0.Gsk.TextureScaleNode
+
+    /**
+     * Creates a node that scales the texture to the size given by the
+     * bounds using the filter and then places it at the bounds' position.
+     * 
+     * Note that further scaling and other transformations which are
+     * applied to the node will apply linear filtering to the resulting
+     * texture, as usual.
+     * 
+     * This node is intended for tight control over scaling applied
+     * to a texture, such as in image editors and requires the
+     * application to be aware of the whole render tree as further
+     * transforms may be applied that conflict with the desired effect
+     * of this node.
+     * @constructor 
+     * @param texture the texture to scale
+     * @param bounds the size of the texture to scale to
+     * @param filter how to scale the texture
+     * @returns A new `GskRenderNode`
+     */
+    constructor(texture: Gdk.Texture, bounds: Graphene.Rect, filter: ScalingFilter) 
+    /**
+     * Creates a node that scales the texture to the size given by the
+     * bounds using the filter and then places it at the bounds' position.
+     * 
+     * Note that further scaling and other transformations which are
+     * applied to the node will apply linear filtering to the resulting
+     * texture, as usual.
+     * 
+     * This node is intended for tight control over scaling applied
+     * to a texture, such as in image editors and requires the
+     * application to be aware of the whole render tree as further
+     * transforms may be applied that conflict with the desired effect
+     * of this node.
+     * @constructor 
+     * @param texture the texture to scale
+     * @param bounds the size of the texture to scale to
+     * @param filter how to scale the texture
+     * @returns A new `GskRenderNode`
+     */
+    static new(texture: Gdk.Texture, bounds: Graphene.Rect, filter: ScalingFilter): TextureScaleNode
 }
 
 interface TransformNode {

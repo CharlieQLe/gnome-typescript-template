@@ -41,7 +41,7 @@ enum ClosedReason {
     DISMISSED,
     /**
      * It has been closed by a call to
-     *   notify_notification_close().
+     *   [method`NotifyNotification`.close].
      */
     API_REQUEST,
     /**
@@ -71,28 +71,43 @@ enum Urgency {
  */
 const EXPIRES_DEFAULT: number
 /**
- * The notification never expires. It stays open until closed by the calling API
- * or the user.
+ * The notification never expires.
+ * 
+ * It stays open until closed by the calling API or the user.
  */
 const EXPIRES_NEVER: number
+/**
+ * Adwaita major version component (e.g. 1 if the version is 1.2.3).
+ */
 const VERSION_MAJOR: number
+/**
+ * Adwaita micro version component (e.g. 3 if the version is 1.2.3).
+ */
 const VERSION_MICRO: number
+/**
+ * Adwaita minor version component (e.g. 2 if the version is 1.2.3).
+ */
 const VERSION_MINOR: number
 /**
  * Gets the application name registered.
- * @returns The registered application name, passed to notify_init().
+ * @returns The registered application name, passed to [func@init].
  */
 function get_app_name(): string | null
 /**
- * Synchronously queries the server for its capabilities and returns them in a #GList.
- * @returns a #GList of server capability strings. Free   the list elements with g_free() and the list itself with g_list_free().
+ * Queries the server capabilities.
+ * 
+ * Synchronously queries the server for its capabilities and returns them in a
+ * list.
+ * @returns a list of server capability strings.
  */
 function get_server_caps(): string[]
 /**
- * Synchronously queries the server for its information, specifically, the name, vendor,
- * server version, and the version of the notifications specification that it
- * is compliant with.
- * @returns %TRUE if successful, and the variables passed will be set, %FALSE          on error. The returned strings must be freed with g_free
+ * Queries the server for information.
+ * 
+ * Synchronously queries the server for its information, specifically, the name,
+ * vendor, server version, and the version of the notifications specification
+ * that it is compliant with.
+ * @returns %TRUE if successful, and the variables passed will be set, %FALSE   on error. The returned strings must be freed with g_free
  */
 function get_server_info(): [ /* returnType */ boolean, /* ret_name */ string | null, /* ret_vendor */ string | null, /* ret_version */ string | null, /* ret_spec_version */ string | null ]
 /**
@@ -116,7 +131,7 @@ function is_initted(): boolean
  */
 function set_app_name(app_name: string | null): void
 /**
- * Uninitialized libnotify.
+ * Uninitializes libnotify.
  * 
  * This should be called when the program no longer needs libnotify for
  * the rest of its lifecycle, typically just before exitting.
@@ -149,10 +164,25 @@ module Notification {
 
         // Own constructor properties of Notify-0.7.Notify.Notification
 
+        /**
+         * The name of the application for the notification.
+         */
         app_name?: string | null
+        /**
+         * The body of the notification.
+         */
         body?: string | null
+        /**
+         * The icon-name of the icon to be displayed on the notification.
+         */
         icon_name?: string | null
+        /**
+         * The Id of the notification.
+         */
         id?: number | null
+        /**
+         * The summary of the notification.
+         */
         summary?: string | null
     }
 
@@ -162,19 +192,40 @@ interface Notification {
 
     // Own properties of Notify-0.7.Notify.Notification
 
+    /**
+     * The name of the application for the notification.
+     */
     app_name: string | null
+    /**
+     * The body of the notification.
+     */
     body: string | null
+    /**
+     * The closed reason of the notification.
+     * 
+     * See [signal`Notification:`:closed].
+     */
     readonly closed_reason: number
+    /**
+     * The icon-name of the icon to be displayed on the notification.
+     */
     icon_name: string | null
+    /**
+     * The Id of the notification.
+     */
     id: number
+    /**
+     * The summary of the notification.
+     */
     summary: string | null
 
     // Owm methods of Notify-0.7.Notify.Notification
 
     /**
-     * Adds an action to a notification. When the action is invoked, the
-     * specified callback function will be called, along with the value passed
-     * to `user_data`.
+     * Adds an action to a notification.
+     * 
+     * When the action is invoked, the specified callback function will be called,
+     * along with the value passed to `user_data`.
      * @param action The action ID.
      * @param label The human-readable action label.
      * @param callback The action's callback function.
@@ -194,42 +245,49 @@ interface Notification {
      */
     close(): boolean
     /**
+     * Gets the activation token of the notification.
+     * 
      * If an an action is currently being activated, return the activation token.
-     * This function is intended to be used in a #NotifyActionCallback to get
+     * This function is intended to be used in a [callback`ActionCallback]` to get
      * the activation token for the activated action, if the notification daemon
      * supports it.
      * @returns The current activation token, or %NULL if none
      */
     get_activation_token(): string | null
     /**
-     * Returns the closed reason code for the notification. This is valid only
-     * after the "closed" signal is emitted.
+     * Returns the closed reason code for the notification.
      * 
-     * Since version 0.8.0 the returned value is of type #NotifyClosedReason.
-     * @returns An integer representing the closed reason code  (Since 0.8.0 it's also a #NotifyClosedReason).
+     * This is valid only after the [signal`Notification:`:closed] signal is emitted.
+     * 
+     * Since version 0.8.0 the returned value is of type [enum`ClosedReason]`.
+     * @returns An integer representing the closed reason code   (Since 0.8.0 it's also a [enum@ClosedReason]).
      */
     get_closed_reason(): number
     /**
-     * Sets the application name for the notification. If this function is
-     * not called or if `app_name` is %NULL, the application name will be
-     * set from the value used in notify_init() or overridden with
-     * notify_set_app_name().
+     * Sets the application name for the notification.
+     * 
+     * If this function is not called or if `app_name` is %NULL, the application name
+     * will be set from the value used in [func`init]` or overridden with
+     * [func`set_app_name]`.
      * @param app_name the localised application name
      */
     set_app_name(app_name: string | null): void
     /**
-     * Sets the category of this notification. This can be used by the
-     * notification server to filter or display the data in a certain way.
+     * Sets the category of this notification.
+     * 
+     * This can be used by the notification server to filter or display the data in
+     * a certain way.
      * @param category The category.
      */
     set_category(category: string | null): void
     /**
-     * Sets a hint for `key` with value `value`. If `value` is %NULL,
-     * a previously set hint for `key` is unset.
+     * Sets a hint for `key` with value `value`.
+     * 
+     * If `value` is %NULL, a previously set hint for `key` is unset.
      * 
      * If `value` is floating, it is consumed.
      * @param key the hint key
-     * @param value the hint value, or %NULL to unset the hint
+     * @param value the hint value
      */
     set_hint(key: string | null, value: GLib.Variant | null): void
     /**
@@ -239,8 +297,9 @@ interface Notification {
      */
     set_hint_byte(key: string | null, value: number): void
     /**
-     * Sets a hint with a byte array value. The length of `value` must be passed
-     * as `len`.
+     * Sets a hint with a byte array value.
+     * 
+     * The length of `value` must be passed as `len`.
      * @param key The hint.
      * @param value The hint's value.
      */
@@ -275,14 +334,15 @@ interface Notification {
      */
     set_icon_from_pixbuf(icon: GdkPixbuf.Pixbuf): void
     /**
-     * Sets the image in the notification from a #GdkPixbuf.
+     * Sets the image in the notification from a [class`GdkPixbuf`.Pixbuf].
      * @param pixbuf The image.
      */
     set_image_from_pixbuf(pixbuf: GdkPixbuf.Pixbuf): void
     /**
-     * Sets the timeout of the notification. To set the default time, pass
-     * %NOTIFY_EXPIRES_DEFAULT as `timeout`. To set the notification to never
-     * expire, pass %NOTIFY_EXPIRES_NEVER.
+     * Sets the timeout of the notification.
+     * 
+     * To set the default time, pass %NOTIFY_EXPIRES_DEFAULT as `timeout`. To set the
+     * notification to never expire, pass %NOTIFY_EXPIRES_NEVER.
      * 
      * Note that the timeout may be ignored by the server.
      * @param timeout The timeout in milliseconds.
@@ -290,20 +350,19 @@ interface Notification {
     set_timeout(timeout: number): void
     /**
      * Sets the urgency level of this notification.
-     * 
-     * See: #NotifyUrgency
      * @param urgency The urgency level.
      */
     set_urgency(urgency: Urgency): void
     /**
      * Tells the notification server to display the notification on the screen.
-     * @returns %TRUE if successful. On error, this will return %FALSE and set          @error.
+     * @returns %TRUE if successful. On error, this will return %FALSE and set   @error.
      */
     show(): boolean
     /**
-     * Updates the notification text and icon. This won't send the update out
-     * and display it on the screen. For that, you will need to call
-     * notify_notification_show().
+     * Updates the notification text and icon.
+     * 
+     * This won't send the update out and display it on the screen. For that, you
+     * will need to call [method`Notification`.show].
      * @param summary The new required summary text.
      * @param body The optional body text.
      * @param icon The optional icon theme icon name or filename.
@@ -349,6 +408,13 @@ interface Notification {
 
 /**
  * A passive pop-up notification.
+ * 
+ * #NotifyNotification represents a passive pop-up notification. It can
+ * contain summary text, body text, and an icon, as well as hints specifying
+ * how the notification should be presented. The notification is rendered
+ * by a notification daemon, and may present the notification in any number
+ * of ways. As such, there is a clear separation of content and presentation,
+ * and this API enforces that.
  * @class 
  */
 class Notification extends GObject.Object {
@@ -362,8 +428,9 @@ class Notification extends GObject.Object {
 
     constructor(config?: Notification.ConstructorProperties) 
     /**
-     * Creates a new #NotifyNotification. The summary text is required, but
-     * all other parameters are optional.
+     * Creates a new #NotifyNotification.
+     * 
+     * The summary text is required, but all other parameters are optional.
      * @constructor 
      * @param summary The required summary text.
      * @param body The optional body text.
@@ -372,8 +439,9 @@ class Notification extends GObject.Object {
      */
     constructor(summary: string | null, body: string | null, icon: string | null) 
     /**
-     * Creates a new #NotifyNotification. The summary text is required, but
-     * all other parameters are optional.
+     * Creates a new #NotifyNotification.
+     * 
+     * The summary text is required, but all other parameters are optional.
      * @constructor 
      * @param summary The required summary text.
      * @param body The optional body text.

@@ -2398,6 +2398,12 @@ module ActionRow {
          */
         subtitle_lines?: number | null
         /**
+         * Whether the user can copy the subtitle from the label.
+         * 
+         * See also [property`Gtk`.Label:selectable].
+         */
+        subtitle_selectable?: boolean | null
+        /**
          * The number of lines at the end of which the title label will be ellipsized.
          * 
          * If the value is 0, the number of lines won't be limited.
@@ -2441,6 +2447,12 @@ interface ActionRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.C
      * If the value is 0, the number of lines won't be limited.
      */
     subtitle_lines: number
+    /**
+     * Whether the user can copy the subtitle from the label.
+     * 
+     * See also [property`Gtk`.Label:selectable].
+     */
+    subtitle_selectable: boolean
     /**
      * The number of lines at the end of which the title label will be ellipsized.
      * 
@@ -2511,6 +2523,11 @@ interface ActionRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.C
      */
     get_subtitle_lines(): number
     /**
+     * Gets whether the user can copy the subtitle from the label
+     * @returns whether the user can copy the subtitle from the label
+     */
+    get_subtitle_selectable(): boolean
+    /**
      * Gets the number of lines at the end of which the title label will be
      * ellipsized.
      * @returns the number of lines at the end of which the title label will be   ellipsized
@@ -2555,6 +2572,13 @@ interface ActionRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.C
      */
     set_subtitle_lines(subtitle_lines: number): void
     /**
+     * Sets whether the user can copy the subtitle from the label
+     * 
+     * See also [property`Gtk`.Label:selectable].
+     * @param subtitle_selectable `TRUE` if the user can copy the subtitle from the label
+     */
+    set_subtitle_selectable(subtitle_selectable: boolean): void
+    /**
      * Sets the number of lines at the end of which the title label will be
      * ellipsized.
      * 
@@ -2591,6 +2615,9 @@ interface ActionRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.C
     connect(sigName: "notify::subtitle-lines", callback: (($obj: ActionRow, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::subtitle-lines", callback: (($obj: ActionRow, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::subtitle-lines", ...args: any[]): void
+    connect(sigName: "notify::subtitle-selectable", callback: (($obj: ActionRow, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::subtitle-selectable", callback: (($obj: ActionRow, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::subtitle-selectable", ...args: any[]): void
     connect(sigName: "notify::title-lines", callback: (($obj: ActionRow, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::title-lines", callback: (($obj: ActionRow, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::title-lines", ...args: any[]): void
@@ -2813,6 +2840,18 @@ module Animation {
         // Own constructor properties of Adw-1.Adw.Animation
 
         /**
+         * Whether to skip the animation when animations are globally disabled.
+         * 
+         * The default behavior is to skip the animation. Set to `FALSE` to disable
+         * this behavior.
+         * 
+         * This can be useful for cases where animation is essential, like spinners,
+         * or in demo applications. Most other animations should keep it enabled.
+         * 
+         * See [property`Gtk`.Settings:gtk-enable-animations].
+         */
+        follow_enable_animations_setting?: boolean | null
+        /**
          * The target to animate.
          */
         target?: AnimationTarget | null
@@ -2835,6 +2874,18 @@ interface Animation {
 
     // Own properties of Adw-1.Adw.Animation
 
+    /**
+     * Whether to skip the animation when animations are globally disabled.
+     * 
+     * The default behavior is to skip the animation. Set to `FALSE` to disable
+     * this behavior.
+     * 
+     * This can be useful for cases where animation is essential, like spinners,
+     * or in demo applications. Most other animations should keep it enabled.
+     * 
+     * See [property`Gtk`.Settings:gtk-enable-animations].
+     */
+    follow_enable_animations_setting: boolean
     /**
      * The animation state.
      * 
@@ -2868,6 +2919,11 @@ interface Animation {
 
     // Owm methods of Adw-1.Adw.Animation
 
+    /**
+     * Gets whether `self` should be skipped when animations are globally disabled.
+     * @returns whether to follow the global setting
+     */
+    get_follow_enable_animations_setting(): boolean
     /**
      * Gets the current value of `self`.
      * 
@@ -2940,6 +2996,19 @@ interface Animation {
      */
     resume(): void
     /**
+     * Sets whether to skip `self` when animations are globally disabled.
+     * 
+     * The default behavior is to skip the animation. Set to `FALSE` to disable this
+     * behavior.
+     * 
+     * This can be useful for cases where animation is essential, like spinners, or
+     * in demo applications. Most other animations should keep it enabled.
+     * 
+     * See [property`Gtk`.Settings:gtk-enable-animations].
+     * @param setting whether to follow the global setting
+     */
+    set_follow_enable_animations_setting(setting: boolean): void
+    /**
      * Sets the target `self` animates to `target`.
      * @param target an animation target
      */
@@ -2963,6 +3032,9 @@ interface Animation {
 
     // Class property signals of Adw-1.Adw.Animation
 
+    connect(sigName: "notify::follow-enable-animations-setting", callback: (($obj: Animation, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::follow-enable-animations-setting", callback: (($obj: Animation, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::follow-enable-animations-setting", ...args: any[]): void
     connect(sigName: "notify::state", callback: (($obj: Animation, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::state", callback: (($obj: Animation, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::state", ...args: any[]): void
@@ -3989,6 +4061,323 @@ class Avatar extends Gtk.Widget {
      */
     static new(size: number, text: string | null, show_initials: boolean): Avatar
     _init(config?: Avatar.ConstructorProperties): void
+}
+
+module Banner {
+
+    // Signal callback interfaces
+
+    /**
+     * Signal callback interface for `button-clicked`
+     */
+    interface ButtonClickedSignalCallback {
+        ($obj: Banner): void
+    }
+
+
+    // Constructor properties interface
+
+    interface ConstructorProperties extends Gtk.Accessible.ConstructorProperties, Gtk.Actionable.ConstructorProperties, Gtk.Buildable.ConstructorProperties, Gtk.ConstraintTarget.ConstructorProperties, Gtk.Widget.ConstructorProperties {
+
+        // Own constructor properties of Adw-1.Adw.Banner
+
+        /**
+         * The label to show on the button.
+         * 
+         * If set to `""` or `NULL`, the button won't be shown.
+         * 
+         * The button can be used with a `GAction`, or with the
+         * [signal`Banner:`:button-clicked] signal.
+         */
+        button_label?: string | null
+        /**
+         * Whether the banner is currently revealed.
+         */
+        revealed?: boolean | null
+        /**
+         * The title for this banner.
+         * 
+         * See also: [property`Banner:`use-markup].
+         */
+        title?: string | null
+        /**
+         * Whether to use Pango markup for the banner title.
+         * 
+         * See also [func`Pango`.parse_markup].
+         */
+        use_markup?: boolean | null
+    }
+
+}
+
+interface Banner extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget {
+
+    // Own properties of Adw-1.Adw.Banner
+
+    /**
+     * The label to show on the button.
+     * 
+     * If set to `""` or `NULL`, the button won't be shown.
+     * 
+     * The button can be used with a `GAction`, or with the
+     * [signal`Banner:`:button-clicked] signal.
+     */
+    button_label: string | null
+    /**
+     * Whether the banner is currently revealed.
+     */
+    revealed: boolean
+    /**
+     * The title for this banner.
+     * 
+     * See also: [property`Banner:`use-markup].
+     */
+    title: string | null
+    /**
+     * Whether to use Pango markup for the banner title.
+     * 
+     * See also [func`Pango`.parse_markup].
+     */
+    use_markup: boolean
+
+    // Owm methods of Adw-1.Adw.Banner
+
+    /**
+     * Gets the button label for `self`.
+     * @returns the button label for @self
+     */
+    get_button_label(): string | null
+    /**
+     * Gets if a banner is revealed
+     * @returns Whether a banner is revealed
+     */
+    get_revealed(): boolean
+    /**
+     * Gets the title for `self`.
+     * @returns the title for @self
+     */
+    get_title(): string | null
+    /**
+     * Gets whether to use Pango markup for the banner title.
+     * @returns whether to use markup
+     */
+    get_use_markup(): boolean
+    /**
+     * Sets the button label for `self`.
+     * 
+     * If set to `""` or `NULL`, the button won't be shown.
+     * 
+     * The button can be used with a `GAction`, or with the
+     * [signal`Banner:`:button-clicked] signal.
+     * @param label the label
+     */
+    set_button_label(label: string | null): void
+    /**
+     * Sets whether a banner should be revealed
+     * @param revealed whether a banner should be revealed
+     */
+    set_revealed(revealed: boolean): void
+    /**
+     * Sets the title for this banner.
+     * 
+     * See also: [property`Banner:`use-markup].
+     * @param title the title
+     */
+    set_title(title: string | null): void
+    /**
+     * Sets whether to use Pango markup for the banner title.
+     * 
+     * See also [func`Pango`.parse_markup].
+     * @param use_markup whether to use markup
+     */
+    set_use_markup(use_markup: boolean): void
+
+    // Own signals of Adw-1.Adw.Banner
+
+    connect(sigName: "button-clicked", callback: Banner.ButtonClickedSignalCallback): number
+    connect_after(sigName: "button-clicked", callback: Banner.ButtonClickedSignalCallback): number
+    emit(sigName: "button-clicked", ...args: any[]): void
+
+    // Class property signals of Adw-1.Adw.Banner
+
+    connect(sigName: "notify::button-label", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::button-label", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::button-label", ...args: any[]): void
+    connect(sigName: "notify::revealed", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::revealed", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::revealed", ...args: any[]): void
+    connect(sigName: "notify::title", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::title", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::title", ...args: any[]): void
+    connect(sigName: "notify::use-markup", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::use-markup", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::use-markup", ...args: any[]): void
+    connect(sigName: "notify::can-focus", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::can-focus", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::can-focus", ...args: any[]): void
+    connect(sigName: "notify::can-target", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::can-target", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::can-target", ...args: any[]): void
+    connect(sigName: "notify::css-classes", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::css-classes", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::css-classes", ...args: any[]): void
+    connect(sigName: "notify::css-name", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::css-name", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::css-name", ...args: any[]): void
+    connect(sigName: "notify::cursor", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::cursor", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::cursor", ...args: any[]): void
+    connect(sigName: "notify::focus-on-click", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::focus-on-click", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::focus-on-click", ...args: any[]): void
+    connect(sigName: "notify::focusable", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::focusable", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::focusable", ...args: any[]): void
+    connect(sigName: "notify::halign", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::halign", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::halign", ...args: any[]): void
+    connect(sigName: "notify::has-default", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-default", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-default", ...args: any[]): void
+    connect(sigName: "notify::has-focus", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-focus", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-focus", ...args: any[]): void
+    connect(sigName: "notify::has-tooltip", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-tooltip", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-tooltip", ...args: any[]): void
+    connect(sigName: "notify::height-request", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::height-request", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::height-request", ...args: any[]): void
+    connect(sigName: "notify::hexpand", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::hexpand", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::hexpand", ...args: any[]): void
+    connect(sigName: "notify::hexpand-set", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::hexpand-set", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::hexpand-set", ...args: any[]): void
+    connect(sigName: "notify::layout-manager", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::layout-manager", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::layout-manager", ...args: any[]): void
+    connect(sigName: "notify::margin-bottom", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-bottom", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-bottom", ...args: any[]): void
+    connect(sigName: "notify::margin-end", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-end", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-end", ...args: any[]): void
+    connect(sigName: "notify::margin-start", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-start", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-start", ...args: any[]): void
+    connect(sigName: "notify::margin-top", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-top", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-top", ...args: any[]): void
+    connect(sigName: "notify::name", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::name", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::name", ...args: any[]): void
+    connect(sigName: "notify::opacity", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::opacity", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::opacity", ...args: any[]): void
+    connect(sigName: "notify::overflow", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::overflow", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::overflow", ...args: any[]): void
+    connect(sigName: "notify::parent", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::parent", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::parent", ...args: any[]): void
+    connect(sigName: "notify::receives-default", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::receives-default", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::receives-default", ...args: any[]): void
+    connect(sigName: "notify::root", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::root", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::root", ...args: any[]): void
+    connect(sigName: "notify::scale-factor", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::scale-factor", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::scale-factor", ...args: any[]): void
+    connect(sigName: "notify::sensitive", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::sensitive", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::sensitive", ...args: any[]): void
+    connect(sigName: "notify::tooltip-markup", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tooltip-markup", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::tooltip-markup", ...args: any[]): void
+    connect(sigName: "notify::tooltip-text", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tooltip-text", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::tooltip-text", ...args: any[]): void
+    connect(sigName: "notify::valign", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::valign", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::valign", ...args: any[]): void
+    connect(sigName: "notify::vexpand", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vexpand", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::vexpand", ...args: any[]): void
+    connect(sigName: "notify::vexpand-set", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vexpand-set", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::vexpand-set", ...args: any[]): void
+    connect(sigName: "notify::visible", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::visible", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::visible", ...args: any[]): void
+    connect(sigName: "notify::width-request", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::width-request", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::width-request", ...args: any[]): void
+    connect(sigName: "notify::accessible-role", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::accessible-role", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::accessible-role", ...args: any[]): void
+    connect(sigName: "notify::action-name", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::action-name", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::action-name", ...args: any[]): void
+    connect(sigName: "notify::action-target", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::action-target", callback: (($obj: Banner, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::action-target", ...args: any[]): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+}
+
+/**
+ * A bar with contextual information.
+ * 
+ * <picture>
+ *   <source srcset="banner-dark.png" media="(prefers-color-scheme: dark)">
+ *   <img src="banner.png" alt="banner">
+ * </picture>
+ * 
+ * Banners are hidden by default, use [property`Banner:`revealed] to show them.
+ * 
+ * Banners have a title, set with [property`Banner:`title]. Titles can be marked
+ * up with Pango markup, use [property`Banner:`use-markup] to enable it.
+ * 
+ * Title can be shown centered or left-aligned depending on available space.
+ * 
+ * Banners can optionally have a button with text on it, set through
+ * [property`Banner:`button-label]. The button can be used with a `GAction`,
+ * or with the [signal`Banner:`:button-clicked] signal.
+ * 
+ * ## CSS nodes
+ * 
+ * `AdwBanner` has a main CSS node with the name `banner`.
+ * @class 
+ */
+class Banner extends Gtk.Widget {
+
+    // Own properties of Adw-1.Adw.Banner
+
+    static name: string
+    static $gtype: GObject.GType<Banner>
+
+    // Constructors of Adw-1.Adw.Banner
+
+    constructor(config?: Banner.ConstructorProperties) 
+    /**
+     * Creates a new `AdwBanner`.
+     * @constructor 
+     * @param title the banner title
+     * @returns the newly created `AdwBanner`
+     */
+    constructor(title: string | null) 
+    /**
+     * Creates a new `AdwBanner`.
+     * @constructor 
+     * @param title the banner title
+     * @returns the newly created `AdwBanner`
+     */
+    static new(title: string | null): Banner
+    _init(config?: Banner.ConstructorProperties): void
 }
 
 module Bin {
@@ -6447,6 +6836,9 @@ interface ComboRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.Co
     connect(sigName: "notify::subtitle-lines", callback: (($obj: ComboRow, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::subtitle-lines", callback: (($obj: ComboRow, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::subtitle-lines", ...args: any[]): void
+    connect(sigName: "notify::subtitle-selectable", callback: (($obj: ComboRow, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::subtitle-selectable", callback: (($obj: ComboRow, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::subtitle-selectable", ...args: any[]): void
     connect(sigName: "notify::title-lines", callback: (($obj: ComboRow, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::title-lines", callback: (($obj: ComboRow, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::title-lines", ...args: any[]): void
@@ -6829,6 +7221,13 @@ interface EntryRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.Co
      * @returns whether to show the apply button
      */
     get_show_apply_button(): boolean
+    /**
+     * Causes `self` to have keyboard focus without selecting the text.
+     * 
+     * See [method`Gtk`.Text.grab_focus_without_selecting] for more information.
+     * @returns whether the focus is now inside @self
+     */
+    grab_focus_without_selecting(): boolean
     /**
      * Removes a child from `self`.
      * @param widget the child to be removed
@@ -7328,6 +7727,19 @@ module ExpanderRow {
          * [property`PreferencesRow:`use-markup] is set to `FALSE`.
          */
         subtitle?: string | null
+        /**
+         * The number of lines at the end of which the subtitle label will be
+         * ellipsized.
+         * 
+         * If the value is 0, the number of lines won't be limited.
+         */
+        subtitle_lines?: number | null
+        /**
+         * The number of lines at the end of which the title label will be ellipsized.
+         * 
+         * If the value is 0, the number of lines won't be limited.
+         */
+        title_lines?: number | null
     }
 
 }
@@ -7359,6 +7771,19 @@ interface ExpanderRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk
      * [property`PreferencesRow:`use-markup] is set to `FALSE`.
      */
     subtitle: string | null
+    /**
+     * The number of lines at the end of which the subtitle label will be
+     * ellipsized.
+     * 
+     * If the value is 0, the number of lines won't be limited.
+     */
+    subtitle_lines: number
+    /**
+     * The number of lines at the end of which the title label will be ellipsized.
+     * 
+     * If the value is 0, the number of lines won't be limited.
+     */
+    title_lines: number
 
     // Own fields of Adw-1.Adw.ExpanderRow
 
@@ -7408,6 +7833,18 @@ interface ExpanderRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk
      * @returns the subtitle for @self
      */
     get_subtitle(): string | null
+    /**
+     * Gets the number of lines at the end of which the subtitle label will be
+     * ellipsized.
+     * @returns the number of lines at the end of which the subtitle label will be   ellipsized
+     */
+    get_subtitle_lines(): boolean
+    /**
+     * Gets the number of lines at the end of which the title label will be
+     * ellipsized.
+     * @returns the number of lines at the end of which the title label will be   ellipsized
+     */
+    get_title_lines(): boolean
     remove(child: Gtk.Widget): void
     /**
      * Sets whether the expansion of `self` is enabled.
@@ -7437,6 +7874,22 @@ interface ExpanderRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk
      * @param subtitle the subtitle
      */
     set_subtitle(subtitle: string | null): void
+    /**
+     * Sets the number of lines at the end of which the subtitle label will be
+     * ellipsized.
+     * 
+     * If the value is 0, the number of lines won't be limited.
+     * @param subtitle_lines the number of lines at the end of which the subtitle label will be ellipsized
+     */
+    set_subtitle_lines(subtitle_lines: number): void
+    /**
+     * Sets the number of lines at the end of which the title label will be
+     * ellipsized.
+     * 
+     * If the value is 0, the number of lines won't be limited.
+     * @param title_lines the number of lines at the end of which the title label will be ellipsized
+     */
+    set_title_lines(title_lines: number): void
 
     // Class property signals of Adw-1.Adw.ExpanderRow
 
@@ -7455,6 +7908,12 @@ interface ExpanderRow extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk
     connect(sigName: "notify::subtitle", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::subtitle", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::subtitle", ...args: any[]): void
+    connect(sigName: "notify::subtitle-lines", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::subtitle-lines", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::subtitle-lines", ...args: any[]): void
+    connect(sigName: "notify::title-lines", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::title-lines", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::title-lines", ...args: any[]): void
     connect(sigName: "notify::title", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::title", callback: (($obj: ExpanderRow, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::title", ...args: any[]): void
@@ -9789,6 +10248,20 @@ interface MessageDialog extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
      */
     add_response(id: string | null, label: string | null): void
     /**
+     * This function shows `self` to the user.
+     * 
+     * The `callback` will be called when the alert is dismissed. It should call
+     * [method`MessageDialog`.choose_finish] to obtain the result.
+     * @param cancellable a `GCancellable` to cancel the operation
+     */
+    choose(cancellable: Gio.Cancellable | null): void
+    /**
+     * Finishes the [method`MessageDialog`.choose] call and returns the response ID.
+     * @param result a `GAsyncResult`
+     * @returns the ID of the response that was selected, or   [property@MessageDialog:close-response] if the call was cancelled.
+     */
+    choose_finish(result: Gio.AsyncResult): string | null
+    /**
      * Gets the body text of `self`.
      * @returns the body of @self.
      */
@@ -10234,6 +10707,48 @@ interface MessageDialog extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTar
  * g_signal_connect (dialog, "response", G_CALLBACK (response_cb), self);
  * 
  * gtk_window_present (GTK_WINDOW (dialog));
+ * ```
+ * 
+ * ## Async API
+ * 
+ * `AdwMessageDialog` can also be used via the [method`MessageDialog`.choose]
+ * method. This API follows the GIO async pattern, and the result can be
+ * obtained by calling [method`MessageDialog`.choose_finish], for example:
+ * 
+ * ```c
+ * static void
+ * dialog_cb (AdwMessageDialog *dialog,
+ *            GAsyncResult     *result,
+ *            MyWindow         *self)
+ * {
+ *   const char *response = adw_message_dialog_choose_finish (dialog, result);
+ * 
+ *   ...
+ * }
+ * 
+ * static void
+ * show_dialog (MyWindow *self)
+ * {
+ *   GtkWidget *dialog;
+ * 
+ *   dialog = adw_message_dialog_new (GTK_WINDOW (self), _("Replace File?"), NULL);
+ * 
+ *   adw_message_dialog_format_body (ADW_MESSAGE_DIALOG (dialog),
+ *                                   _("A file named “%s” already exists. Do you want to replace it?"),
+ *                                   filename);
+ * 
+ *   adw_message_dialog_add_responses (ADW_MESSAGE_DIALOG (dialog),
+ *                                     "cancel",  _("_Cancel"),
+ *                                     "replace", _("_Replace"),
+ *                                     NULL);
+ * 
+ *   adw_message_dialog_set_response_appearance (ADW_MESSAGE_DIALOG (dialog), "replace", ADW_RESPONSE_DESTRUCTIVE);
+ * 
+ *   adw_message_dialog_set_default_response (ADW_MESSAGE_DIALOG (dialog), "cancel");
+ *   adw_message_dialog_set_close_response (ADW_MESSAGE_DIALOG (dialog), "cancel");
+ * 
+ *   adw_message_dialog_choose (ADW_MESSAGE_DIALOG (dialog), NULL, (GAsyncReadyCallback) dialog_cb, self);
+ * }
  * ```
  * 
  * ## AdwMessageDialog as GtkBuildable
@@ -10963,6 +11478,10 @@ interface PreferencesPage extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
      * @param group the group to remove
      */
     remove(group: PreferencesGroup): void
+    /**
+     * Scrolls the scrolled window of `self` to the top.
+     */
+    scroll_to_top(): void
     /**
      * Sets the icon name for `self`.
      * @param icon_name the icon name
@@ -12625,6 +13144,28 @@ interface SpringAnimation {
     // Owm methods of Adw-1.Adw.SpringAnimation
 
     /**
+     * Calculates the value `self` will have at `time`.
+     * 
+     * The time starts at 0 and ends at
+     * [property`SpringAnimation:`estimated_duration].
+     * 
+     * See also [method`SpringAnimation`.calculate_velocity].
+     * @param time elapsed time, in milliseconds
+     * @returns the value at @time
+     */
+    calculate_value(time: number): number
+    /**
+     * Calculates the velocity `self` will have at `time`.
+     * 
+     * The time starts at 0 and ends at
+     * [property`SpringAnimation:`estimated_duration].
+     * 
+     * See also [method`SpringAnimation`.calculate_value].
+     * @param time elapsed time, in milliseconds
+     * @returns the velocity at @time
+     */
+    calculate_velocity(time: number): number
+    /**
      * Gets whether `self` should be clamped.
      * @returns whether @self is clamped
      */
@@ -12635,7 +13176,7 @@ interface SpringAnimation {
      */
     get_epsilon(): number
     /**
-     * Gets the estimated duration of `self`.
+     * Gets the estimated duration of `self,` in milliseconds.
      * 
      * Can be [const`DURATION_INFINITE]` if the spring damping is set to 0.
      * @returns the estimated duration
@@ -12748,6 +13289,9 @@ interface SpringAnimation {
     connect(sigName: "notify::velocity", callback: (($obj: SpringAnimation, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::velocity", callback: (($obj: SpringAnimation, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::velocity", ...args: any[]): void
+    connect(sigName: "notify::follow-enable-animations-setting", callback: (($obj: SpringAnimation, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::follow-enable-animations-setting", callback: (($obj: SpringAnimation, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::follow-enable-animations-setting", ...args: any[]): void
     connect(sigName: "notify::state", callback: (($obj: SpringAnimation, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::state", callback: (($obj: SpringAnimation, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::state", ...args: any[]): void
@@ -14299,6 +14843,13 @@ module TabBar {
         ($obj: TabBar, page: TabPage, value: any): boolean
     }
 
+    /**
+     * Signal callback interface for `extra-drag-value`
+     */
+    interface ExtraDragValueSignalCallback {
+        ($obj: TabBar, page: TabPage, value: any): Gdk.DragAction
+    }
+
 
     // Constructor properties interface
 
@@ -14326,6 +14877,12 @@ module TabBar {
          * when possible, otherwise tabs will always have the minimum possible size.
          */
         expand_tabs?: boolean | null
+        /**
+         * Whether the drop data should be preloaded on hover.
+         * 
+         * See [property`Gtk`.DropTarget:preload].
+         */
+        extra_drag_preload?: boolean | null
         /**
          * Whether tabs use inverted layout.
          * 
@@ -14369,6 +14926,12 @@ interface TabBar extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      * when possible, otherwise tabs will always have the minimum possible size.
      */
     expand_tabs: boolean
+    /**
+     * Whether the drop data should be preloaded on hover.
+     * 
+     * See [property`Gtk`.DropTarget:preload].
+     */
+    extra_drag_preload: boolean
     /**
      * Whether tabs use inverted layout.
      * 
@@ -14414,6 +14977,11 @@ interface TabBar extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      * @returns whether tabs expand to full width.
      */
     get_expand_tabs(): boolean
+    /**
+     * Gets whether drop data should be preloaded on hover.
+     * @returns whether drop data should be preloaded on hover
+     */
+    get_extra_drag_preload(): boolean
     /**
      * Gets whether tabs use inverted layout.
      * @returns whether tabs use inverted layout
@@ -14467,6 +15035,13 @@ interface TabBar extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      */
     set_expand_tabs(expand_tabs: boolean): void
     /**
+     * Sets whether drop data should be preloaded on hover.
+     * 
+     * See [property`Gtk`.DropTarget:preload].
+     * @param preload whether to preload drop data
+     */
+    set_extra_drag_preload(preload: boolean): void
+    /**
      * Sets whether tabs tabs use inverted layout.
      * 
      * If set to `TRUE`, non-pinned tabs will have the close button at the beginning
@@ -14506,6 +15081,9 @@ interface TabBar extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
     connect(sigName: "extra-drag-drop", callback: TabBar.ExtraDragDropSignalCallback): number
     connect_after(sigName: "extra-drag-drop", callback: TabBar.ExtraDragDropSignalCallback): number
     emit(sigName: "extra-drag-drop", page: TabPage, value: any, ...args: any[]): void
+    connect(sigName: "extra-drag-value", callback: TabBar.ExtraDragValueSignalCallback): number
+    connect_after(sigName: "extra-drag-value", callback: TabBar.ExtraDragValueSignalCallback): number
+    emit(sigName: "extra-drag-value", page: TabPage, value: any, ...args: any[]): void
 
     // Class property signals of Adw-1.Adw.TabBar
 
@@ -14518,6 +15096,9 @@ interface TabBar extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
     connect(sigName: "notify::expand-tabs", callback: (($obj: TabBar, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::expand-tabs", callback: (($obj: TabBar, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::expand-tabs", ...args: any[]): void
+    connect(sigName: "notify::extra-drag-preload", callback: (($obj: TabBar, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::extra-drag-preload", callback: (($obj: TabBar, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::extra-drag-preload", ...args: any[]): void
     connect(sigName: "notify::inverted", callback: (($obj: TabBar, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::inverted", callback: (($obj: TabBar, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::inverted", ...args: any[]): void
@@ -14692,11 +15273,821 @@ class TabBar extends Gtk.Widget {
     _init(config?: TabBar.ConstructorProperties): void
 }
 
+module TabButton {
+
+    // Signal callback interfaces
+
+    /**
+     * Signal callback interface for `activate`
+     */
+    interface ActivateSignalCallback {
+        ($obj: TabButton): void
+    }
+
+    /**
+     * Signal callback interface for `clicked`
+     */
+    interface ClickedSignalCallback {
+        ($obj: TabButton): void
+    }
+
+
+    // Constructor properties interface
+
+    interface ConstructorProperties extends Gtk.Accessible.ConstructorProperties, Gtk.Actionable.ConstructorProperties, Gtk.Buildable.ConstructorProperties, Gtk.ConstraintTarget.ConstructorProperties, Gtk.Widget.ConstructorProperties {
+
+        // Own constructor properties of Adw-1.Adw.TabButton
+
+        /**
+         * The view the tab button displays.
+         */
+        view?: TabView | null
+    }
+
+}
+
+interface TabButton extends Gtk.Accessible, Gtk.Actionable, Gtk.Buildable, Gtk.ConstraintTarget {
+
+    // Own properties of Adw-1.Adw.TabButton
+
+    /**
+     * The view the tab button displays.
+     */
+    view: TabView
+
+    // Owm methods of Adw-1.Adw.TabButton
+
+    /**
+     * Gets the tab view `self` displays.
+     * @returns the tab view
+     */
+    get_view(): TabView | null
+    /**
+     * Sets the tab view to display.
+     * @param view a tab view
+     */
+    set_view(view: TabView | null): void
+
+    // Own signals of Adw-1.Adw.TabButton
+
+    connect(sigName: "activate", callback: TabButton.ActivateSignalCallback): number
+    connect_after(sigName: "activate", callback: TabButton.ActivateSignalCallback): number
+    emit(sigName: "activate", ...args: any[]): void
+    connect(sigName: "clicked", callback: TabButton.ClickedSignalCallback): number
+    connect_after(sigName: "clicked", callback: TabButton.ClickedSignalCallback): number
+    emit(sigName: "clicked", ...args: any[]): void
+
+    // Class property signals of Adw-1.Adw.TabButton
+
+    connect(sigName: "notify::view", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::view", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::view", ...args: any[]): void
+    connect(sigName: "notify::can-focus", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::can-focus", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::can-focus", ...args: any[]): void
+    connect(sigName: "notify::can-target", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::can-target", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::can-target", ...args: any[]): void
+    connect(sigName: "notify::css-classes", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::css-classes", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::css-classes", ...args: any[]): void
+    connect(sigName: "notify::css-name", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::css-name", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::css-name", ...args: any[]): void
+    connect(sigName: "notify::cursor", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::cursor", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::cursor", ...args: any[]): void
+    connect(sigName: "notify::focus-on-click", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::focus-on-click", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::focus-on-click", ...args: any[]): void
+    connect(sigName: "notify::focusable", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::focusable", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::focusable", ...args: any[]): void
+    connect(sigName: "notify::halign", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::halign", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::halign", ...args: any[]): void
+    connect(sigName: "notify::has-default", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-default", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-default", ...args: any[]): void
+    connect(sigName: "notify::has-focus", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-focus", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-focus", ...args: any[]): void
+    connect(sigName: "notify::has-tooltip", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-tooltip", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-tooltip", ...args: any[]): void
+    connect(sigName: "notify::height-request", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::height-request", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::height-request", ...args: any[]): void
+    connect(sigName: "notify::hexpand", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::hexpand", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::hexpand", ...args: any[]): void
+    connect(sigName: "notify::hexpand-set", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::hexpand-set", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::hexpand-set", ...args: any[]): void
+    connect(sigName: "notify::layout-manager", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::layout-manager", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::layout-manager", ...args: any[]): void
+    connect(sigName: "notify::margin-bottom", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-bottom", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-bottom", ...args: any[]): void
+    connect(sigName: "notify::margin-end", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-end", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-end", ...args: any[]): void
+    connect(sigName: "notify::margin-start", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-start", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-start", ...args: any[]): void
+    connect(sigName: "notify::margin-top", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-top", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-top", ...args: any[]): void
+    connect(sigName: "notify::name", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::name", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::name", ...args: any[]): void
+    connect(sigName: "notify::opacity", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::opacity", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::opacity", ...args: any[]): void
+    connect(sigName: "notify::overflow", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::overflow", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::overflow", ...args: any[]): void
+    connect(sigName: "notify::parent", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::parent", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::parent", ...args: any[]): void
+    connect(sigName: "notify::receives-default", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::receives-default", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::receives-default", ...args: any[]): void
+    connect(sigName: "notify::root", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::root", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::root", ...args: any[]): void
+    connect(sigName: "notify::scale-factor", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::scale-factor", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::scale-factor", ...args: any[]): void
+    connect(sigName: "notify::sensitive", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::sensitive", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::sensitive", ...args: any[]): void
+    connect(sigName: "notify::tooltip-markup", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tooltip-markup", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::tooltip-markup", ...args: any[]): void
+    connect(sigName: "notify::tooltip-text", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tooltip-text", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::tooltip-text", ...args: any[]): void
+    connect(sigName: "notify::valign", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::valign", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::valign", ...args: any[]): void
+    connect(sigName: "notify::vexpand", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vexpand", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::vexpand", ...args: any[]): void
+    connect(sigName: "notify::vexpand-set", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vexpand-set", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::vexpand-set", ...args: any[]): void
+    connect(sigName: "notify::visible", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::visible", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::visible", ...args: any[]): void
+    connect(sigName: "notify::width-request", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::width-request", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::width-request", ...args: any[]): void
+    connect(sigName: "notify::accessible-role", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::accessible-role", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::accessible-role", ...args: any[]): void
+    connect(sigName: "notify::action-name", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::action-name", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::action-name", ...args: any[]): void
+    connect(sigName: "notify::action-target", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::action-target", callback: (($obj: TabButton, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::action-target", ...args: any[]): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+}
+
+/**
+ * A button that displays the number of [class`TabView]` pages.
+ * 
+ * <picture>
+ *   <source srcset="tab-button-dark.png" media="(prefers-color-scheme: dark)">
+ *   <img src="tab-button.png" alt="tab-button">
+ * </picture>
+ * 
+ * `AdwTabButton` is a button that displays the number of pages in a given
+ * `AdwTabView`, as well as whether one of the inactive pages needs attention.
+ * 
+ * It's intended to be used as a visible indicator when there's no visible tab
+ * bar, typically opening an [class`TabOverview]` on click, e.g. via the
+ * `overview.open` action name:
+ * 
+ * ```xml
+ * <object class="AdwTabButton">
+ *   <property name="view">view</property>
+ *   <property name="action-name">overview.open</property>
+ * </object>
+ * ```
+ * 
+ * ## CSS nodes
+ * 
+ * `AdwTabButton` has a main CSS node with name `tabbutton`.
+ * 
+ * # Accessibility
+ * 
+ * `AdwTabButton` uses the `GTK_ACCESSIBLE_ROLE_BUTTON` role.
+ * @class 
+ */
+class TabButton extends Gtk.Widget {
+
+    // Own properties of Adw-1.Adw.TabButton
+
+    static name: string
+    static $gtype: GObject.GType<TabButton>
+
+    // Constructors of Adw-1.Adw.TabButton
+
+    constructor(config?: TabButton.ConstructorProperties) 
+    /**
+     * Creates a new `AdwTabButton`.
+     * @constructor 
+     * @returns the newly created `AdwTabButton`
+     */
+    constructor() 
+    /**
+     * Creates a new `AdwTabButton`.
+     * @constructor 
+     * @returns the newly created `AdwTabButton`
+     */
+    static new(): TabButton
+    _init(config?: TabButton.ConstructorProperties): void
+}
+
+module TabOverview {
+
+    // Signal callback interfaces
+
+    /**
+     * Signal callback interface for `create-tab`
+     */
+    interface CreateTabSignalCallback {
+        ($obj: TabOverview): TabPage
+    }
+
+    /**
+     * Signal callback interface for `extra-drag-drop`
+     */
+    interface ExtraDragDropSignalCallback {
+        ($obj: TabOverview, page: TabPage, value: any): boolean
+    }
+
+    /**
+     * Signal callback interface for `extra-drag-value`
+     */
+    interface ExtraDragValueSignalCallback {
+        ($obj: TabOverview, page: TabPage, value: any): Gdk.DragAction
+    }
+
+
+    // Constructor properties interface
+
+    interface ConstructorProperties extends Gtk.Accessible.ConstructorProperties, Gtk.Buildable.ConstructorProperties, Gtk.ConstraintTarget.ConstructorProperties, Gtk.Widget.ConstructorProperties {
+
+        // Own constructor properties of Adw-1.Adw.TabOverview
+
+        /**
+         * The child widget.
+         */
+        child?: Gtk.Widget | null
+        /**
+         * Whether to enable new tab button.
+         * 
+         * Connect to the [signal`TabOverview:`:create-tab] signal to use it.
+         */
+        enable_new_tab?: boolean | null
+        /**
+         * Whether to enable search in tabs.
+         * 
+         * Search matches tab titles and tooltips, as well as keywords, set via
+         * [property`TabPage:`keyword]. Use keywords to search in e.g. page URLs in a
+         * web browser.
+         * 
+         * During search, tab reordering and drag-n-drop are disabled.
+         * 
+         * Use [property`TabOverview:`search-active] to check out if search is
+         * currently active.
+         */
+        enable_search?: boolean | null
+        /**
+         * Whether the drop data should be preloaded on hover.
+         * 
+         * See [property`Gtk`.DropTarget:preload].
+         */
+        extra_drag_preload?: boolean | null
+        /**
+         * Whether thumbnails use inverted layout.
+         * 
+         * If set to `TRUE`, thumbnails will have the close or unpin buttons at the
+         * beginning and the indicator at the end rather than the other way around.
+         */
+        inverted?: boolean | null
+        /**
+         * Whether the overview is open.
+         */
+        open?: boolean | null
+        /**
+         * The secondary menu model.
+         * 
+         * Use it to add extra actions, e.g. to open a new window or undo closed tab.
+         */
+        secondary_menu?: Gio.MenuModel | null
+        /**
+         * Whether to show end title buttons in the overview's header bar.
+         * 
+         * See [property`HeaderBar:`show-start-title-buttons] for the other side.
+         */
+        show_end_title_buttons?: boolean | null
+        /**
+         * Whether to show start title buttons in the overview's header bar.
+         * 
+         * See [property`HeaderBar:`show-end-title-buttons] for the other side.
+         */
+        show_start_title_buttons?: boolean | null
+        /**
+         * The tab view the overview controls.
+         * 
+         * The view must be inside the tab overview, see [property`TabOverview:`child].
+         */
+        view?: TabView | null
+    }
+
+}
+
+interface TabOverview extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
+
+    // Own properties of Adw-1.Adw.TabOverview
+
+    /**
+     * The child widget.
+     */
+    child: Gtk.Widget
+    /**
+     * Whether to enable new tab button.
+     * 
+     * Connect to the [signal`TabOverview:`:create-tab] signal to use it.
+     */
+    enable_new_tab: boolean
+    /**
+     * Whether to enable search in tabs.
+     * 
+     * Search matches tab titles and tooltips, as well as keywords, set via
+     * [property`TabPage:`keyword]. Use keywords to search in e.g. page URLs in a
+     * web browser.
+     * 
+     * During search, tab reordering and drag-n-drop are disabled.
+     * 
+     * Use [property`TabOverview:`search-active] to check out if search is
+     * currently active.
+     */
+    enable_search: boolean
+    /**
+     * Whether the drop data should be preloaded on hover.
+     * 
+     * See [property`Gtk`.DropTarget:preload].
+     */
+    extra_drag_preload: boolean
+    /**
+     * Whether thumbnails use inverted layout.
+     * 
+     * If set to `TRUE`, thumbnails will have the close or unpin buttons at the
+     * beginning and the indicator at the end rather than the other way around.
+     */
+    inverted: boolean
+    /**
+     * Whether the overview is open.
+     */
+    open: boolean
+    /**
+     * Whether search is currently active.
+     * 
+     * See [property`TabOverview:`enable-search].
+     */
+    readonly search_active: boolean
+    /**
+     * The secondary menu model.
+     * 
+     * Use it to add extra actions, e.g. to open a new window or undo closed tab.
+     */
+    secondary_menu: Gio.MenuModel
+    /**
+     * Whether to show end title buttons in the overview's header bar.
+     * 
+     * See [property`HeaderBar:`show-start-title-buttons] for the other side.
+     */
+    show_end_title_buttons: boolean
+    /**
+     * Whether to show start title buttons in the overview's header bar.
+     * 
+     * See [property`HeaderBar:`show-end-title-buttons] for the other side.
+     */
+    show_start_title_buttons: boolean
+    /**
+     * The tab view the overview controls.
+     * 
+     * The view must be inside the tab overview, see [property`TabOverview:`child].
+     */
+    view: TabView
+
+    // Owm methods of Adw-1.Adw.TabOverview
+
+    /**
+     * Gets the child widget of `self`.
+     * @returns the child widget of @self
+     */
+    get_child(): Gtk.Widget | null
+    /**
+     * Gets whether to new tab button is enabled for `self`.
+     * @returns whether new tab button is enabled
+     */
+    get_enable_new_tab(): boolean
+    /**
+     * Gets whether search in tabs is enabled for `self`.
+     * @returns whether search is enabled
+     */
+    get_enable_search(): boolean
+    /**
+     * Gets whether drop data should be preloaded on hover.
+     * @returns whether drop data should be preloaded on hover
+     */
+    get_extra_drag_preload(): boolean
+    /**
+     * Gets whether thumbnails use inverted layout.
+     * @returns whether thumbnails use inverted layout
+     */
+    get_inverted(): boolean
+    /**
+     * Gets whether `self` is open.
+     * @returns whether the overview is open
+     */
+    get_open(): boolean
+    /**
+     * Gets whether search is currently active for `self`.
+     * 
+     * See [property`TabOverview:`enable-search].
+     * @returns whether search is active
+     */
+    get_search_active(): boolean
+    /**
+     * Gets the secondary menu model for `self`.
+     * @returns the secondary menu model
+     */
+    get_secondary_menu(): Gio.MenuModel | null
+    /**
+     * Gets whether end title buttons are shown in `self'`s header bar.
+     * @returns whether end title buttons are shown
+     */
+    get_show_end_title_buttons(): boolean
+    /**
+     * Gets whether start title buttons are shown in `self'`s header bar.
+     * @returns whether start title buttons are shown
+     */
+    get_show_start_title_buttons(): boolean
+    /**
+     * Gets the tab view `self` controls.
+     * @returns the tab view
+     */
+    get_view(): TabView | null
+    /**
+     * Sets the child widget of `self`.
+     * @param child the child widget
+     */
+    set_child(child: Gtk.Widget | null): void
+    /**
+     * Sets whether to enable new tab button for `self`.
+     * 
+     * Connect to the [signal`TabOverview:`:create-tab] signal to use it.
+     * @param enable_new_tab whether to enable new tab button
+     */
+    set_enable_new_tab(enable_new_tab: boolean): void
+    /**
+     * Sets whether to enable search in tabs for `self`.
+     * 
+     * Search matches tab titles and tooltips, as well as keywords, set via
+     * [property`TabPage:`keyword]. Use keywords to search in e.g. page URLs in a web
+     * browser.
+     * 
+     * During search, tab reordering and drag-n-drop are disabled.
+     * 
+     * Use [property`TabOverview:`search-active] to check out if search is currently
+     * active.
+     * @param enable_search whether to enable search
+     */
+    set_enable_search(enable_search: boolean): void
+    /**
+     * Sets whether drop data should be preloaded on hover.
+     * 
+     * See [property`Gtk`.DropTarget:preload].
+     * @param preload whether to preload drop data
+     */
+    set_extra_drag_preload(preload: boolean): void
+    /**
+     * Sets whether thumbnails use inverted layout.
+     * 
+     * If set to `TRUE`, thumbnails will have the close or unpin button at the
+     * beginning and the indicator at the end rather than the other way around.
+     * @param inverted whether thumbnails use inverted layout
+     */
+    set_inverted(inverted: boolean): void
+    /**
+     * Sets whether the to open `self`.
+     * @param open whether the overview is open
+     */
+    set_open(open: boolean): void
+    /**
+     * Sets the secondary menu model for `self`.
+     * 
+     * Use it to add extra actions, e.g. to open a new window or undo closed tab.
+     * @param secondary_menu a menu model
+     */
+    set_secondary_menu(secondary_menu: Gio.MenuModel | null): void
+    /**
+     * Sets whether to show end title buttons in `self'`s header bar.
+     * 
+     * See [property`HeaderBar:`show-start-title-buttons] for the other side.
+     * @param show_end_title_buttons whether to show end title buttons
+     */
+    set_show_end_title_buttons(show_end_title_buttons: boolean): void
+    /**
+     * Sets whether to show start title buttons in `self'`s header bar.
+     * 
+     * See [property`HeaderBar:`show-end-title-buttons] for the other side.
+     * @param show_start_title_buttons whether to show start title buttons
+     */
+    set_show_start_title_buttons(show_start_title_buttons: boolean): void
+    /**
+     * Sets the tab view to control.
+     * 
+     * The view must be inside `self,` see [property`TabOverview:`child].
+     * @param view a tab view
+     */
+    set_view(view: TabView | null): void
+    /**
+     * Sets the supported types for this drop target.
+     * 
+     * Sets up an extra drop target on tabs.
+     * 
+     * This allows to drag arbitrary content onto tabs, for example URLs in a web
+     * browser.
+     * 
+     * If a tab is hovered for a certain period of time while dragging the content,
+     * it will be automatically selected.
+     * 
+     * The [signal`TabOverview:`:extra-drag-drop] signal can be used to handle the
+     * drop.
+     * @param actions the supported actions
+     * @param types    all supported `GType`s that can be dropped
+     */
+    setup_extra_drop_target(actions: Gdk.DragAction, types: GObject.GType[] | null): void
+
+    // Own signals of Adw-1.Adw.TabOverview
+
+    connect(sigName: "create-tab", callback: TabOverview.CreateTabSignalCallback): number
+    connect_after(sigName: "create-tab", callback: TabOverview.CreateTabSignalCallback): number
+    emit(sigName: "create-tab", ...args: any[]): void
+    connect(sigName: "extra-drag-drop", callback: TabOverview.ExtraDragDropSignalCallback): number
+    connect_after(sigName: "extra-drag-drop", callback: TabOverview.ExtraDragDropSignalCallback): number
+    emit(sigName: "extra-drag-drop", page: TabPage, value: any, ...args: any[]): void
+    connect(sigName: "extra-drag-value", callback: TabOverview.ExtraDragValueSignalCallback): number
+    connect_after(sigName: "extra-drag-value", callback: TabOverview.ExtraDragValueSignalCallback): number
+    emit(sigName: "extra-drag-value", page: TabPage, value: any, ...args: any[]): void
+
+    // Class property signals of Adw-1.Adw.TabOverview
+
+    connect(sigName: "notify::child", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::child", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::child", ...args: any[]): void
+    connect(sigName: "notify::enable-new-tab", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::enable-new-tab", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::enable-new-tab", ...args: any[]): void
+    connect(sigName: "notify::enable-search", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::enable-search", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::enable-search", ...args: any[]): void
+    connect(sigName: "notify::extra-drag-preload", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::extra-drag-preload", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::extra-drag-preload", ...args: any[]): void
+    connect(sigName: "notify::inverted", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::inverted", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::inverted", ...args: any[]): void
+    connect(sigName: "notify::open", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::open", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::open", ...args: any[]): void
+    connect(sigName: "notify::search-active", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::search-active", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::search-active", ...args: any[]): void
+    connect(sigName: "notify::secondary-menu", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::secondary-menu", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::secondary-menu", ...args: any[]): void
+    connect(sigName: "notify::show-end-title-buttons", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::show-end-title-buttons", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::show-end-title-buttons", ...args: any[]): void
+    connect(sigName: "notify::show-start-title-buttons", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::show-start-title-buttons", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::show-start-title-buttons", ...args: any[]): void
+    connect(sigName: "notify::view", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::view", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::view", ...args: any[]): void
+    connect(sigName: "notify::can-focus", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::can-focus", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::can-focus", ...args: any[]): void
+    connect(sigName: "notify::can-target", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::can-target", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::can-target", ...args: any[]): void
+    connect(sigName: "notify::css-classes", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::css-classes", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::css-classes", ...args: any[]): void
+    connect(sigName: "notify::css-name", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::css-name", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::css-name", ...args: any[]): void
+    connect(sigName: "notify::cursor", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::cursor", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::cursor", ...args: any[]): void
+    connect(sigName: "notify::focus-on-click", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::focus-on-click", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::focus-on-click", ...args: any[]): void
+    connect(sigName: "notify::focusable", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::focusable", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::focusable", ...args: any[]): void
+    connect(sigName: "notify::halign", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::halign", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::halign", ...args: any[]): void
+    connect(sigName: "notify::has-default", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-default", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-default", ...args: any[]): void
+    connect(sigName: "notify::has-focus", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-focus", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-focus", ...args: any[]): void
+    connect(sigName: "notify::has-tooltip", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::has-tooltip", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::has-tooltip", ...args: any[]): void
+    connect(sigName: "notify::height-request", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::height-request", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::height-request", ...args: any[]): void
+    connect(sigName: "notify::hexpand", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::hexpand", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::hexpand", ...args: any[]): void
+    connect(sigName: "notify::hexpand-set", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::hexpand-set", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::hexpand-set", ...args: any[]): void
+    connect(sigName: "notify::layout-manager", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::layout-manager", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::layout-manager", ...args: any[]): void
+    connect(sigName: "notify::margin-bottom", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-bottom", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-bottom", ...args: any[]): void
+    connect(sigName: "notify::margin-end", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-end", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-end", ...args: any[]): void
+    connect(sigName: "notify::margin-start", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-start", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-start", ...args: any[]): void
+    connect(sigName: "notify::margin-top", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::margin-top", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::margin-top", ...args: any[]): void
+    connect(sigName: "notify::name", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::name", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::name", ...args: any[]): void
+    connect(sigName: "notify::opacity", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::opacity", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::opacity", ...args: any[]): void
+    connect(sigName: "notify::overflow", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::overflow", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::overflow", ...args: any[]): void
+    connect(sigName: "notify::parent", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::parent", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::parent", ...args: any[]): void
+    connect(sigName: "notify::receives-default", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::receives-default", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::receives-default", ...args: any[]): void
+    connect(sigName: "notify::root", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::root", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::root", ...args: any[]): void
+    connect(sigName: "notify::scale-factor", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::scale-factor", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::scale-factor", ...args: any[]): void
+    connect(sigName: "notify::sensitive", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::sensitive", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::sensitive", ...args: any[]): void
+    connect(sigName: "notify::tooltip-markup", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tooltip-markup", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::tooltip-markup", ...args: any[]): void
+    connect(sigName: "notify::tooltip-text", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::tooltip-text", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::tooltip-text", ...args: any[]): void
+    connect(sigName: "notify::valign", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::valign", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::valign", ...args: any[]): void
+    connect(sigName: "notify::vexpand", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vexpand", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::vexpand", ...args: any[]): void
+    connect(sigName: "notify::vexpand-set", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::vexpand-set", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::vexpand-set", ...args: any[]): void
+    connect(sigName: "notify::visible", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::visible", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::visible", ...args: any[]): void
+    connect(sigName: "notify::width-request", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::width-request", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::width-request", ...args: any[]): void
+    connect(sigName: "notify::accessible-role", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::accessible-role", callback: (($obj: TabOverview, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::accessible-role", ...args: any[]): void
+    connect(sigName: string, callback: (...args: any[]) => void): number
+    connect_after(sigName: string, callback: (...args: any[]) => void): number
+    emit(sigName: string, ...args: any[]): void
+    disconnect(id: number): void
+}
+
+/**
+ * A tab overview for [class`TabView]`.
+ * 
+ * <picture>
+ *   <source srcset="tab-overview-dark.png" media="(prefers-color-scheme: dark)">
+ *   <img src="tab-overview.png" alt="tab-overview">
+ * </picture>
+ * 
+ * `AdwTabOverview` is a widget that can display tabs from an `AdwTabView` in a
+ * grid.
+ * 
+ * `AdwTabOverview` shows a thumbnail for each tab. By default thumbnails are
+ * static for all pages except the selected one. They can be made always live
+ * by setting [property`TabPage:`live-thumbnail] to `TRUE`, or refreshed with
+ * [method`TabPage`.invalidate_thumbnail] or
+ * [method`TabView`.invalidate_thumbnails] otherwise.
+ * 
+ * If the pages are too tall or too wide, the thumbnails will be cropped; use
+ * [property`TabPage:`thumbnail-xalign] and [property`TabPage:`thumbnail-yalign] to
+ * control which part of the page should be visible in this case.
+ * 
+ * Pinned tabs are shown as smaller cards without thumbnails above the other
+ * tabs. Unlike in [class`TabBar]`, they still have titles, as well as an unpin
+ * button.
+ * 
+ * `AdwTabOverview` provides search in open tabs. It searches in tab titles and
+ * tooltips, as well as [property`TabPage:`keyword].
+ * 
+ * If [property`TabOverview:`enable-new-tab] is set to `TRUE`, a new tab button
+ * will be shown. Connect to the [signal`TabOverview:`:create-tab] signal to use
+ * it.
+ * 
+ * [property`TabOverview:`secondary-menu] can be used to provide a secondary menu
+ * for the overview. Use it to add extra actions, e.g. to open a new window or
+ * undo closed tab.
+ * 
+ * `AdwTabOverview` is intended to be used as the direct child of the window,
+ * with the rest of the window contents set as the [property`TabOverview:`child].
+ * The child is expected to contain an [class`TabView]`.
+ * 
+ * `AdwTabOverview` shows window buttons by default. They can be disabled by
+ * setting [property`TabOverview:`show-start-title-buttons] and/or
+ * [property`TabOverview:`show-start-title-buttons] and/or
+ * [property`TabOverview:`show-end-title-buttons] to `FALSE`.
+ * 
+ * If search and window buttons are disabled, and secondary menu is not set, the
+ * header bar will be hidden.
+ * 
+ * ## Actions
+ * 
+ * `AdwTabOverview` defines the `overview.open` and `overview.close` actions for
+ * opening and closing itself. They can be convenient when used together with
+ * [class`TabButton]`.
+ * 
+ * ## CSS nodes
+ * 
+ * `AdwTabOverview` has a single CSS node with name `taboverview`.
+ * @class 
+ */
+class TabOverview extends Gtk.Widget {
+
+    // Own properties of Adw-1.Adw.TabOverview
+
+    static name: string
+    static $gtype: GObject.GType<TabOverview>
+
+    // Constructors of Adw-1.Adw.TabOverview
+
+    constructor(config?: TabOverview.ConstructorProperties) 
+    /**
+     * Creates a new `AdwTabOverview`.
+     * @constructor 
+     * @returns the newly created `AdwTabOverview`
+     */
+    constructor() 
+    /**
+     * Creates a new `AdwTabOverview`.
+     * @constructor 
+     * @returns the newly created `AdwTabOverview`
+     */
+    static new(): TabOverview
+    _init(config?: TabOverview.ConstructorProperties): void
+}
+
 module TabPage {
 
     // Constructor properties interface
 
-    interface ConstructorProperties extends GObject.Object.ConstructorProperties {
+    interface ConstructorProperties extends Gtk.Accessible.ConstructorProperties, GObject.Object.ConstructorProperties {
 
         // Own constructor properties of Adw-1.Adw.TabPage
 
@@ -14707,10 +16098,11 @@ module TabPage {
         /**
          * The icon of the page.
          * 
-         * [class`TabBar]` displays the icon next to the title.
+         * [class`TabBar]` and [class`TabOverview]` display the icon next to the title,
+         * unless [property`TabPage:`loading] is set to `TRUE`.
          * 
-         * It will not show the icon if [property`TabPage:`loading] is set to `TRUE`,
-         * or if the page is pinned and [propertyTabPage:indicator-icon] is set.
+         * `AdwTabBar` also won't show the icon if the page is pinned and
+         * [propertyTabPage:indicator-icon] is set.
          */
         icon?: Gio.Icon | null
         /**
@@ -14733,6 +16125,8 @@ module TabPage {
          * If the page is pinned, the indicator will be shown instead of icon or
          * spinner.
          * 
+         * [class`TabOverview]` will show it at the at the top part of the thumbnail.
+         * 
          * [property`TabPage:`indicator-tooltip] can be used to set the tooltip on the
          * indicator icon.
          * 
@@ -14749,12 +16143,34 @@ module TabPage {
          */
         indicator_tooltip?: string | null
         /**
+         * The search keyboard of the page.
+         * 
+         * [class`TabOverview]` can search pages by their keywords in addition to their
+         * titles and tooltips.
+         * 
+         * Keywords allow to include e.g. page URLs into tab search in a web browser.
+         */
+        keyword?: string | null
+        /**
+         * Whether to enable live thumbnail for this page.
+         * 
+         * When set to `TRUE`, the page's thumbnail in [class`TabOverview]` will update
+         * immediately when the page is redrawn or resized.
+         * 
+         * If it's set to `FALSE`, the thumbnail will only be live when the page is
+         * selected, and otherwise it will be static and will only update when
+         * [method`TabPage`.invalidate_thumbnail] or
+         * [method`TabView`.invalidate_thumbnails] is called.
+         */
+        live_thumbnail?: boolean | null
+        /**
          * Whether the page is loading.
          * 
-         * If set to `TRUE`, [class`TabBar]` will display a spinner in place of icon.
+         * If set to `TRUE`, [class`TabBar]` and [class`TabOverview]` will display a
+         * spinner in place of icon.
          * 
-         * If the page is pinned and [property`TabPage:`indicator-icon] is set, the
-         * loading status will not be visible.
+         * If the page is pinned and [property`TabPage:`indicator-icon] is set,
+         * loading status will not be visible with `AdwTabBar`.
          */
         loading?: boolean | null
         /**
@@ -14763,6 +16179,12 @@ module TabPage {
          * [class`TabBar]` will display a line under the tab representing the page if
          * set to `TRUE`. If the tab is not visible, the corresponding edge of the tab
          * bar will be highlighted.
+         * 
+         * [class`TabOverview]` will display a dot in the corner of the thumbnail if set
+         * to `TRUE`.
+         * 
+         * [class`TabButton]` will display a dot if any of the pages that aren't
+         * selected have this property set to `TRUE`.
          */
         needs_attention?: boolean | null
         /**
@@ -14772,10 +16194,40 @@ module TabPage {
          */
         parent?: TabPage | null
         /**
+         * The horizontal alignment of the page thumbnail.
+         * 
+         * If the page is so wide that [class`TabOverview]` can't display it completely
+         * and has to crop it, horizontal alignment will determine which part of the
+         * page will be visible.
+         * 
+         * For example, 0.5 means the center of the page will be visible, 0 means the
+         * start edge will be visible and 1 means the end edge will be visible.
+         * 
+         * The default horizontal alignment is 0.
+         */
+        thumbnail_xalign?: number | null
+        /**
+         * The vertical alignment of the page thumbnail.
+         * 
+         * If the page is so tall that [class`TabOverview]` can't display it completely
+         * and has to crop it, vertical alignment will determine which part of the
+         * page will be visible.
+         * 
+         * For example, 0.5 means the center of the page will be visible, 0 means the
+         * top edge will be visible and 1 means the bottom edge will be visible.
+         * 
+         * The default vertical alignment is 0.
+         */
+        thumbnail_yalign?: number | null
+        /**
          * The title of the page.
          * 
          * [class`TabBar]` will display it in the center of the tab unless it's pinned,
          * and will use it as a tooltip unless [property`TabPage:`tooltip] is set.
+         * 
+         * [class`TabOverview]` will display it below the thumbnail unless it's pinned,
+         * or inside the card otherwise, and will use it as a tooltip unless
+         * [property`TabPage:`tooltip] is set.
          */
         title?: string | null
         /**
@@ -14783,15 +16235,15 @@ module TabPage {
          * 
          * The tooltip can be marked up with the Pango text markup language.
          * 
-         * If not set, [class`TabBar]` will use [property`TabPage:`title] as a tooltip
-         * instead.
+         * If not set, [class`TabBar]` and [class`TabOverview]` will use
+         * [property`TabPage:`title] as a tooltip instead.
          */
         tooltip?: string | null
     }
 
 }
 
-interface TabPage {
+interface TabPage extends Gtk.Accessible {
 
     // Own properties of Adw-1.Adw.TabPage
 
@@ -14802,10 +16254,11 @@ interface TabPage {
     /**
      * The icon of the page.
      * 
-     * [class`TabBar]` displays the icon next to the title.
+     * [class`TabBar]` and [class`TabOverview]` display the icon next to the title,
+     * unless [property`TabPage:`loading] is set to `TRUE`.
      * 
-     * It will not show the icon if [property`TabPage:`loading] is set to `TRUE`,
-     * or if the page is pinned and [propertyTabPage:indicator-icon] is set.
+     * `AdwTabBar` also won't show the icon if the page is pinned and
+     * [propertyTabPage:indicator-icon] is set.
      */
     icon: Gio.Icon
     /**
@@ -14828,6 +16281,8 @@ interface TabPage {
      * If the page is pinned, the indicator will be shown instead of icon or
      * spinner.
      * 
+     * [class`TabOverview]` will show it at the at the top part of the thumbnail.
+     * 
      * [property`TabPage:`indicator-tooltip] can be used to set the tooltip on the
      * indicator icon.
      * 
@@ -14844,12 +16299,34 @@ interface TabPage {
      */
     indicator_tooltip: string | null
     /**
+     * The search keyboard of the page.
+     * 
+     * [class`TabOverview]` can search pages by their keywords in addition to their
+     * titles and tooltips.
+     * 
+     * Keywords allow to include e.g. page URLs into tab search in a web browser.
+     */
+    keyword: string | null
+    /**
+     * Whether to enable live thumbnail for this page.
+     * 
+     * When set to `TRUE`, the page's thumbnail in [class`TabOverview]` will update
+     * immediately when the page is redrawn or resized.
+     * 
+     * If it's set to `FALSE`, the thumbnail will only be live when the page is
+     * selected, and otherwise it will be static and will only update when
+     * [method`TabPage`.invalidate_thumbnail] or
+     * [method`TabView`.invalidate_thumbnails] is called.
+     */
+    live_thumbnail: boolean
+    /**
      * Whether the page is loading.
      * 
-     * If set to `TRUE`, [class`TabBar]` will display a spinner in place of icon.
+     * If set to `TRUE`, [class`TabBar]` and [class`TabOverview]` will display a
+     * spinner in place of icon.
      * 
-     * If the page is pinned and [property`TabPage:`indicator-icon] is set, the
-     * loading status will not be visible.
+     * If the page is pinned and [property`TabPage:`indicator-icon] is set,
+     * loading status will not be visible with `AdwTabBar`.
      */
     loading: boolean
     /**
@@ -14858,6 +16335,12 @@ interface TabPage {
      * [class`TabBar]` will display a line under the tab representing the page if
      * set to `TRUE`. If the tab is not visible, the corresponding edge of the tab
      * bar will be highlighted.
+     * 
+     * [class`TabOverview]` will display a dot in the corner of the thumbnail if set
+     * to `TRUE`.
+     * 
+     * [class`TabButton]` will display a dot if any of the pages that aren't
+     * selected have this property set to `TRUE`.
      */
     needs_attention: boolean
     /**
@@ -14877,10 +16360,40 @@ interface TabPage {
      */
     readonly selected: boolean
     /**
+     * The horizontal alignment of the page thumbnail.
+     * 
+     * If the page is so wide that [class`TabOverview]` can't display it completely
+     * and has to crop it, horizontal alignment will determine which part of the
+     * page will be visible.
+     * 
+     * For example, 0.5 means the center of the page will be visible, 0 means the
+     * start edge will be visible and 1 means the end edge will be visible.
+     * 
+     * The default horizontal alignment is 0.
+     */
+    thumbnail_xalign: number
+    /**
+     * The vertical alignment of the page thumbnail.
+     * 
+     * If the page is so tall that [class`TabOverview]` can't display it completely
+     * and has to crop it, vertical alignment will determine which part of the
+     * page will be visible.
+     * 
+     * For example, 0.5 means the center of the page will be visible, 0 means the
+     * top edge will be visible and 1 means the bottom edge will be visible.
+     * 
+     * The default vertical alignment is 0.
+     */
+    thumbnail_yalign: number
+    /**
      * The title of the page.
      * 
      * [class`TabBar]` will display it in the center of the tab unless it's pinned,
      * and will use it as a tooltip unless [property`TabPage:`tooltip] is set.
+     * 
+     * [class`TabOverview]` will display it below the thumbnail unless it's pinned,
+     * or inside the card otherwise, and will use it as a tooltip unless
+     * [property`TabPage:`tooltip] is set.
      */
     title: string | null
     /**
@@ -14888,8 +16401,8 @@ interface TabPage {
      * 
      * The tooltip can be marked up with the Pango text markup language.
      * 
-     * If not set, [class`TabBar]` will use [property`TabPage:`title] as a tooltip
-     * instead.
+     * If not set, [class`TabBar]` and [class`TabOverview]` will use
+     * [property`TabPage:`title] as a tooltip instead.
      */
     tooltip: string | null
 
@@ -14921,6 +16434,16 @@ interface TabPage {
      */
     get_indicator_tooltip(): string | null
     /**
+     * Gets the search keyword of `self`.
+     * @returns the search keyword of @self
+     */
+    get_keyword(): string | null
+    /**
+     * Gets whether to live thumbnail is enabled `self`.
+     * @returns whether live thumbnail is enabled
+     */
+    get_live_thumbnail(): boolean
+    /**
      * Gets whether `self` is loading.
      * @returns whether @self is loading
      */
@@ -14950,6 +16473,16 @@ interface TabPage {
      */
     get_selected(): boolean
     /**
+     * Gets the horizontal alignment of the thumbnail for `self`.
+     * @returns the horizontal alignment
+     */
+    get_thumbnail_xalign(): number
+    /**
+     * Gets the vertical alignment of the thumbnail for `self`.
+     * @returns the vertical alignment
+     */
+    get_thumbnail_yalign(): number
+    /**
      * Gets the title of `self`.
      * @returns the title of @self
      */
@@ -14960,12 +16493,24 @@ interface TabPage {
      */
     get_tooltip(): string | null
     /**
+     * Invalidates thumbnail for `self`.
+     * 
+     * If an [class`TabOverview]` is open, the thumbnail representing `self` will be
+     * immediately updated. Otherwise it will be update when opening the overview.
+     * 
+     * Does nothing if [property`TabPage:`live-thumbnail] is set to `TRUE`.
+     * 
+     * See also [method`TabView`.invalidate_thumbnails].
+     */
+    invalidate_thumbnail(): void
+    /**
      * Sets the icon of `self`.
      * 
-     * [class`TabBar]` displays the icon next to the title.
+     * [class`TabBar]` and [class`TabOverview]` display the icon next to the title,
+     * unless [property`TabPage:`loading] is set to `TRUE`.
      * 
-     * It will not show the icon if [property`TabPage:`loading] is set to `TRUE`,
-     * or if the page is pinned and [propertyTabPage:indicator-icon] is set.
+     * `AdwTabBar` also won't show the icon if the page is pinned and
+     * [propertyTabPage:indicator-icon] is set.
      * @param icon the icon of `self`
      */
     set_icon(icon: Gio.Icon | null): void
@@ -14990,6 +16535,8 @@ interface TabPage {
      * If the page is pinned, the indicator will be shown instead of icon or
      * spinner.
      * 
+     * [class`TabOverview]` will show it at the at the top part of the thumbnail.
+     * 
      * [property`TabPage:`indicator-tooltip] can be used to set the tooltip on the
      * indicator icon.
      * 
@@ -15008,12 +16555,36 @@ interface TabPage {
      */
     set_indicator_tooltip(tooltip: string | null): void
     /**
+     * Sets the search keyword for `self`.
+     * 
+     * [class`TabOverview]` can search pages by their keywords in addition to their
+     * titles and tooltips.
+     * 
+     * Keywords allow to include e.g. page URLs into tab search in a web browser.
+     * @param keyword the search keyword
+     */
+    set_keyword(keyword: string | null): void
+    /**
+     * Sets whether to enable live thumbnail for `self`.
+     * 
+     * When set to `TRUE`, `self'`s thumbnail in [class`TabOverview]` will update
+     * immediately when `self` is redrawn or resized.
+     * 
+     * If it's set to `FALSE`, the thumbnail will only be live when the `self` is
+     * selected, and otherwise it will be static and will only update when
+     * [method`TabPage`.invalidate_thumbnail] or
+     * [method`TabView`.invalidate_thumbnails] is called.
+     * @param live_thumbnail whether to enable live thumbnail
+     */
+    set_live_thumbnail(live_thumbnail: boolean): void
+    /**
      * Sets whether `self` is loading.
      * 
-     * If set to `TRUE`, [class`TabBar]` will display a spinner in place of icon.
+     * If set to `TRUE`, [class`TabBar]` and [class`TabOverview]` will display a
+     * spinner in place of icon.
      * 
-     * If the page is pinned and [property`TabPage:`indicator-icon] is set, the
-     * loading status will not be visible.
+     * If the page is pinned and [property`TabPage:`indicator-icon] is set, loading
+     * status will not be visible with `AdwTabBar`.
      * @param loading whether `self` is loading
      */
     set_loading(loading: boolean): void
@@ -15023,12 +16594,50 @@ interface TabPage {
      * [class`TabBar]` will display a line under the tab representing the page if
      * set to `TRUE`. If the tab is not visible, the corresponding edge of the tab
      * bar will be highlighted.
+     * 
+     * [class`TabOverview]` will display a dot in the corner of the thumbnail if set
+     * to `TRUE`.
+     * 
+     * [class`TabButton]` will display a dot if any of the pages that aren't
+     * selected have [property`TabPage:`needs-attention] set to `TRUE`.
      * @param needs_attention whether `self` needs attention
      */
     set_needs_attention(needs_attention: boolean): void
     /**
+     * Sets the horizontal alignment of the thumbnail for `self`.
+     * 
+     * If the page is so wide that [class`TabOverview]` can't display it completely
+     * and has to crop it, horizontal alignment will determine which part of the
+     * page will be visible.
+     * 
+     * For example, 0.5 means the center of the page will be visible, 0 means the
+     * start edge will be visible and 1 means the end edge will be visible.
+     * 
+     * The default horizontal alignment is 0.
+     * @param xalign the new value
+     */
+    set_thumbnail_xalign(xalign: number): void
+    /**
+     * Sets the vertical alignment of the thumbnail for `self`.
+     * 
+     * If the page is so tall that [class`TabOverview]` can't display it completely
+     * and has to crop it, vertical alignment will determine which part of the page
+     * will be visible.
+     * 
+     * For example, 0.5 means the center of the page will be visible, 0 means the
+     * top edge will be visible and 1 means the bottom edge will be visible.
+     * 
+     * The default vertical alignment is 0.
+     * @param yalign the new value
+     */
+    set_thumbnail_yalign(yalign: number): void
+    /**
      * [class`TabBar]` will display it in the center of the tab unless it's pinned,
      * and will use it as a tooltip unless [property`TabPage:`tooltip] is set.
+     * 
+     * [class`TabOverview]` will display it below the thumbnail unless it's pinned,
+     * or inside the card otherwise, and will use it as a tooltip unless
+     * [property`TabPage:`tooltip] is set.
      * 
      * Sets the title of `self`.
      * @param title the title of `self`
@@ -15039,8 +16648,8 @@ interface TabPage {
      * 
      * The tooltip can be marked up with the Pango text markup language.
      * 
-     * If not set, [class`TabBar]` will use [property`TabPage:`title] as a tooltip
-     * instead.
+     * If not set, [class`TabBar]` and [class`TabOverview]` will use
+     * [property`TabPage:`title] as a tooltip instead.
      * @param tooltip the tooltip of `self`
      */
     set_tooltip(tooltip: string | null): void
@@ -15062,6 +16671,12 @@ interface TabPage {
     connect(sigName: "notify::indicator-tooltip", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::indicator-tooltip", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::indicator-tooltip", ...args: any[]): void
+    connect(sigName: "notify::keyword", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::keyword", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::keyword", ...args: any[]): void
+    connect(sigName: "notify::live-thumbnail", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::live-thumbnail", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::live-thumbnail", ...args: any[]): void
     connect(sigName: "notify::loading", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::loading", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::loading", ...args: any[]): void
@@ -15077,12 +16692,21 @@ interface TabPage {
     connect(sigName: "notify::selected", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::selected", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::selected", ...args: any[]): void
+    connect(sigName: "notify::thumbnail-xalign", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::thumbnail-xalign", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::thumbnail-xalign", ...args: any[]): void
+    connect(sigName: "notify::thumbnail-yalign", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::thumbnail-yalign", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::thumbnail-yalign", ...args: any[]): void
     connect(sigName: "notify::title", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::title", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::title", ...args: any[]): void
     connect(sigName: "notify::tooltip", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::tooltip", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::tooltip", ...args: any[]): void
+    connect(sigName: "notify::accessible-role", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::accessible-role", callback: (($obj: TabPage, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::accessible-role", ...args: any[]): void
     connect(sigName: string, callback: (...args: any[]) => void): number
     connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
@@ -15177,6 +16801,9 @@ module TabView {
          * not loading, doesn't have an icon and an indicator. Default icon is never
          * used for tabs that aren't pinned.
          * 
+         * [class`TabOverview]` will use default icon for pages with missing
+         * thumbnails.
+         * 
          * By default, the `adw-tab-icon-missing-symbolic` icon is used.
          */
         default_icon?: Gio.Icon | null
@@ -15220,6 +16847,9 @@ interface TabView extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      * [class`TabBar]` will use default icon for pinned tabs in case the page is
      * not loading, doesn't have an icon and an indicator. Default icon is never
      * used for tabs that aren't pinned.
+     * 
+     * [class`TabOverview]` will use default icon for pages with missing
+     * thumbnails.
      * 
      * By default, the `adw-tab-icon-missing-symbolic` icon is used.
      */
@@ -15454,6 +17084,13 @@ interface TabView extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      */
     insert_pinned(child: Gtk.Widget, position: number): TabPage
     /**
+     * Invalidates thumbnails for all pages in `self`.
+     * 
+     * This is a convenience method, equivalent to calling
+     * [method`TabPage`.invalidate_thumbnail] on each page.
+     */
+    invalidate_thumbnails(): void
+    /**
      * Inserts `child` as the first non-pinned page.
      * @param child a widget to add
      * @returns the page object representing @child
@@ -15530,6 +17167,8 @@ interface TabView extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      * loading, doesn't have an icon and an indicator. Default icon is never used
      * for tabs that aren't pinned.
      * 
+     * [class`TabOverview]` will use default icon for pages with missing thumbnails.
+     * 
      * By default, the `adw-tab-icon-missing-symbolic` icon is used.
      * @param default_icon the default icon
      */
@@ -15564,6 +17203,10 @@ interface TabView extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
      * 2. A spinner if [property`TabPage:`loading] is `TRUE`
      * 3. [property`TabPage:`icon]
      * 4. [property`TabView:`default-icon]
+     * 
+     * [class`TabOverview]` will not show a thumbnail for pinned pages, and replace
+     * the close button with an unpin button. Unlike `AdwTabBar`, it will still
+     * display the page's title, icon and indicator separately.
      * 
      * Pinned pages cannot be closed by default, see [signal`TabView:`:close-page]
      * for how to override that behavior.
@@ -15768,8 +17411,8 @@ interface TabView extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
  * 
  * `AdwTabView` is a container which shows one child at a time. While it
  * provides keyboard shortcuts for switching between pages, it does not provide
- * a visible tab bar and relies on external widgets for that, such as
- * [class`TabBar]`.
+ * a visible tab switcher and relies on external widgets for that, such as
+ * [class`TabBar]`, [class`TabOverview]` and [class`TabButton]`.
  * 
  * `AdwTabView` maintains a [class`TabPage]` object for each page, which holds
  * additional per-page properties. You can obtain the `AdwTabPage` for a page
@@ -15800,6 +17443,11 @@ interface TabView extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget {
  * ## CSS nodes
  * 
  * `AdwTabView` has a main CSS node with the name `tabview`.
+ * 
+ * ## Accessibility
+ * 
+ * `AdwTabView` uses the `GTK_ACCESSIBLE_ROLE_TAB_PANEL` for the tab pages which
+ * are the accessible parent objects of the child widgets.
  * @class 
  */
 class TabView extends Gtk.Widget {
@@ -16060,6 +17708,9 @@ interface TimedAnimation {
     connect(sigName: "notify::value-to", callback: (($obj: TimedAnimation, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::value-to", callback: (($obj: TimedAnimation, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::value-to", ...args: any[]): void
+    connect(sigName: "notify::follow-enable-animations-setting", callback: (($obj: TimedAnimation, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::follow-enable-animations-setting", callback: (($obj: TimedAnimation, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::follow-enable-animations-setting", ...args: any[]): void
     connect(sigName: "notify::state", callback: (($obj: TimedAnimation, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::state", callback: (($obj: TimedAnimation, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::state", ...args: any[]): void
@@ -16793,6 +18444,8 @@ interface ToastOverlay extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarg
  *   <img src="toast-overlay.png" alt="toast-overlay">
  * </picture>
  * 
+ * Much like [class`Gtk`.Overlay], `AdwToastOverlay` is a container with a single
+ * main child, on top of which it can display a [class`Toast]`, overlaid.
  * Toasts can be shown with [method`ToastOverlay`.add_toast].
  * 
  * See [class`Toast]` for details.
@@ -17234,6 +18887,11 @@ interface ViewStack extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintTarget 
  * ## CSS nodes
  * 
  * `AdwViewStack` has a single CSS node named `stack`.
+ * 
+ * ## Accessibility
+ * 
+ * `AdwViewStack` uses the `GTK_ACCESSIBLE_ROLE_TAB_PANEL` for the stack pages
+ * which are the accessible parent objects of the child widgets.
  * @class 
  */
 class ViewStack extends Gtk.Widget {
@@ -17265,7 +18923,7 @@ module ViewStackPage {
 
     // Constructor properties interface
 
-    interface ConstructorProperties extends GObject.Object.ConstructorProperties {
+    interface ConstructorProperties extends Gtk.Accessible.ConstructorProperties, GObject.Object.ConstructorProperties {
 
         // Own constructor properties of Adw-1.Adw.ViewStackPage
 
@@ -17315,7 +18973,7 @@ module ViewStackPage {
 
 }
 
-interface ViewStackPage {
+interface ViewStackPage extends Gtk.Accessible {
 
     // Own properties of Adw-1.Adw.ViewStackPage
 
@@ -17479,6 +19137,9 @@ interface ViewStackPage {
     connect(sigName: "notify::visible", callback: (($obj: ViewStackPage, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::visible", callback: (($obj: ViewStackPage, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::visible", ...args: any[]): void
+    connect(sigName: "notify::accessible-role", callback: (($obj: ViewStackPage, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::accessible-role", callback: (($obj: ViewStackPage, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::accessible-role", ...args: any[]): void
     connect(sigName: string, callback: (...args: any[]) => void): number
     connect_after(sigName: string, callback: (...args: any[]) => void): number
     emit(sigName: string, ...args: any[]): void
@@ -17940,7 +19601,7 @@ interface ViewSwitcherBar extends Gtk.Accessible, Gtk.Buildable, Gtk.ConstraintT
  *       </property>
  *     </object>
  *   </property>
- *   <property>
+ *   <property name="child">
  *     <object class="GtkBox">
  *       <property name="orientation">vertical</property>
  *       <child>
@@ -18296,10 +19957,10 @@ interface ViewSwitcherTitle extends Gtk.Accessible, Gtk.Buildable, Gtk.Constrain
  *         <object class="AdwViewSwitcherTitle" id="title">
  *           <property name="stack">stack</property>
  *         </object>
- *       </child>
+ *       </property>
  *     </object>
  *   </property>
- *   <property>
+ *   <property name="child">
  *     <object class="GtkBox">
  *       <property name="orientation">vertical</property>
  *       <child>
@@ -18977,6 +20638,20 @@ abstract class AvatarClass {
     static name: string
 }
 
+interface BannerClass {
+
+    // Own fields of Adw-1.Adw.BannerClass
+
+    parent_class: Gtk.WidgetClass
+}
+
+abstract class BannerClass {
+
+    // Own properties of Adw-1.Adw.BannerClass
+
+    static name: string
+}
+
 interface BinClass {
 
     // Own fields of Adw-1.Adw.BinClass
@@ -19617,6 +21292,34 @@ interface TabBarClass {
 abstract class TabBarClass {
 
     // Own properties of Adw-1.Adw.TabBarClass
+
+    static name: string
+}
+
+interface TabButtonClass {
+
+    // Own fields of Adw-1.Adw.TabButtonClass
+
+    parent_class: Gtk.WidgetClass
+}
+
+abstract class TabButtonClass {
+
+    // Own properties of Adw-1.Adw.TabButtonClass
+
+    static name: string
+}
+
+interface TabOverviewClass {
+
+    // Own fields of Adw-1.Adw.TabOverviewClass
+
+    parent_class: Gtk.WidgetClass
+}
+
+abstract class TabOverviewClass {
+
+    // Own properties of Adw-1.Adw.TabOverviewClass
 
     static name: string
 }

@@ -15,7 +15,6 @@ import type GObject from './GObject-2.0.js';
 
 declare namespace freetype2 {
 
-function library_version(): void
 interface Bitmap {
 }
 

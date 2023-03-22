@@ -6845,7 +6845,7 @@ interface DeviceTool {
     /**
      * Gets the hardware ID of this tool, or 0 if it's not known.
      * 
-     * When non-zero, the identificator is unique for the given tool model,
+     * When non-zero, the identifier is unique for the given tool model,
      * meaning that two identical tools will share the same `hardware_id,`
      * but will have different serial numbers (see
      * [method`Gdk`.DeviceTool.get_serial]).
@@ -6853,8 +6853,8 @@ interface DeviceTool {
      * This is a more concrete (and device specific) method to identify
      * a `GdkDeviceTool` than [method`Gdk`.DeviceTool.get_tool_type],
      * as a tablet may support multiple devices with the same
-     * `GdkDeviceToolType`, but different hardware identificators.
-     * @returns The hardware identificator of this tool.
+     * `GdkDeviceToolType`, but different hardware identifiers.
+     * @returns The hardware identifier of this tool.
      */
     get_hardware_id(): number
     /**
@@ -7038,13 +7038,10 @@ interface Display {
     /**
      * Gets the monitor in which the largest area of `surface`
      * resides.
-     * 
-     * Returns a monitor close to `surface` if it is outside
-     * of all monitors.
      * @param surface a `GdkSurface`
      * @returns the monitor with the largest   overlap with @surface
      */
-    get_monitor_at_surface(surface: Surface): Monitor
+    get_monitor_at_surface(surface: Surface): Monitor | null
     /**
      * Gets the list of monitors associated with this display.
      * 
@@ -7188,9 +7185,6 @@ interface Display {
     /**
      * Appends the given event onto the front of the event
      * queue for `display`.
-     * 
-     * This function is only useful in very special situations
-     * and should not be used by applications.
      * @param event a `GdkEvent`
      */
     put_event(event: Event): void
@@ -7467,7 +7461,7 @@ class DisplayManager extends GObject.Object {
      * with multiple backends).
      * 
      * Applications can use [func`set_allowed_backends]` to limit what
-     * backends wil be used.
+     * backends will be used.
      * @returns The global `GdkDisplayManager` singleton
      */
     static get(): DisplayManager
@@ -8229,7 +8223,7 @@ interface Event {
      */
     get_display(): Display | null
     /**
-     * Retuns the event sequence to which the event belongs.
+     * Returns the event sequence to which the event belongs.
      * 
      * Related touch events are connected in a sequence. Other
      * events typically don't have event sequence information.
@@ -9204,6 +9198,10 @@ interface Monitor {
      */
     readonly connector: string | null
     /**
+     * A short description of the monitor, meant for display to the user.
+     */
+    readonly description: string | null
+    /**
      * The `GdkDisplay` of the monitor.
      */
     readonly display: Display
@@ -9248,9 +9246,20 @@ interface Monitor {
 
     /**
      * Gets the name of the monitor's connector, if available.
+     * 
+     * These are strings such as "eDP-1", or "HDMI-2". They depend
+     * on software and hardware configuration, and should not be
+     * relied on as stable identifiers of a specific monitor.
      * @returns the name of the connector
      */
     get_connector(): string | null
+    /**
+     * Gets a string describing the monitor, if available.
+     * 
+     * This can be used to identify a monitor in the UI.
+     * @returns the monitor description
+     */
+    get_description(): string | null
     /**
      * Gets the display that this monitor belongs to.
      * @returns the display
@@ -9338,6 +9347,9 @@ interface Monitor {
     connect(sigName: "notify::connector", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::connector", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::connector", ...args: any[]): void
+    connect(sigName: "notify::description", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
+    connect_after(sigName: "notify::description", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
+    emit(sigName: "notify::description", ...args: any[]): void
     connect(sigName: "notify::display", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
     connect_after(sigName: "notify::display", callback: (($obj: Monitor, pspec: GObject.ParamSpec) => void)): number
     emit(sigName: "notify::display", ...args: any[]): void
@@ -10175,10 +10187,26 @@ interface Texture extends Paintable, Gio.Icon, Gio.LoadableIcon {
      *                       cairo_image_surface_get_stride (surface));
      * cairo_surface_mark_dirty (surface);
      * ```
+     * 
+     * For more flexible download capabilites, see
+     * [struct`Gdk`.TextureDownloader].
      * @param data pointer to enough memory to be filled with the   downloaded data of `texture`
      * @param stride rowstride in bytes
      */
     download(data: Uint8Array, stride: number): void
+    /**
+     * Gets the memory format most closely associated with the data of
+     * the texture.
+     * 
+     * Note that it may not be an exact match for texture data
+     * stored on the GPU or with compression.
+     * 
+     * The format can give an indication about the bit depth and opacity
+     * of the texture and is useful to determine the best format for
+     * downloading the texture.
+     * @returns the preferred format for the texture's data
+     */
+    get_format(): MemoryFormat
     /**
      * Returns the height of the `texture,` in pixels.
      * @returns the height of the `GdkTexture`
@@ -10300,7 +10328,7 @@ class Texture extends GObject.Object {
      * Creates a new texture by loading an image from memory,
      * 
      * The file format is detected automatically. The supported formats
-     * are PNG and JPEG, though more formats might be available.
+     * are PNG, JPEG and TIFF, though more formats might be available.
      * 
      * If %NULL is returned, then `error` will be set.
      * 
@@ -10316,7 +10344,7 @@ class Texture extends GObject.Object {
      * Creates a new texture by loading an image from a file.
      * 
      * The file format is detected automatically. The supported formats
-     * are PNG and JPEG, though more formats might be available.
+     * are PNG, JPEG and TIFF, though more formats might be available.
      * 
      * If %NULL is returned, then `error` will be set.
      * 
@@ -10332,7 +10360,7 @@ class Texture extends GObject.Object {
      * Creates a new texture by loading an image from a file.
      * 
      * The file format is detected automatically. The supported formats
-     * are PNG and JPEG, though more formats might be available.
+     * are PNG, JPEG and TIFF, though more formats might be available.
      * 
      * If %NULL is returned, then `error` will be set.
      * 
@@ -11554,6 +11582,99 @@ abstract class TextureClass {
     // Own properties of Gdk-4.0.Gdk.TextureClass
 
     static name: string
+}
+
+interface TextureDownloader {
+
+    // Owm methods of Gdk-4.0.Gdk.TextureDownloader
+
+    /**
+     * Creates a copy of the downloader.
+     * 
+     * This function is meant for language bindings.
+     * @returns A copy of the downloader
+     */
+    copy(): TextureDownloader
+    /**
+     * Downloads the given texture pixels into a `GBytes`. The rowstride will
+     * be stored in the stride value.
+     * 
+     * This function will abort if it tries to download a large texture and
+     * fails to allocate memory. If you think that may happen, you should
+     * handle memory allocation yourself and use
+     * gdk_texture_downloader_download_into() once allocation succeeded.
+     * @returns The downloaded pixels.
+     */
+    download_bytes(): [ /* returnType */ GLib.Bytes, /* out_stride */ number ]
+    /**
+     * Downloads the `texture` into local memory.
+     * @param data pointer to enough memory to be filled with the   downloaded data of the texture
+     * @param stride rowstride in bytes
+     */
+    download_into(data: Uint8Array, stride: number): void
+    /**
+     * Frees the given downloader and all its associated resources.
+     */
+    free(): void
+    /**
+     * Gets the format that the data will be downloaded in.
+     * @returns The format of the download
+     */
+    get_format(): MemoryFormat
+    /**
+     * Gets the texture that the downloader will download.
+     * @returns The texture to download
+     */
+    get_texture(): Texture
+    /**
+     * Sets the format the downloader will download.
+     * 
+     * By default, GDK_MEMORY_DEFAULT is set.
+     * @param format the format to use
+     */
+    set_format(format: MemoryFormat): void
+    /**
+     * Changes the texture the downloader will download.
+     * @param texture the new texture to download
+     */
+    set_texture(texture: Texture): void
+}
+
+/**
+ * The `GdkTextureDownloader` is used to download the contents of a
+ * [class`Gdk`.Texture].
+ * 
+ * It is intended to be created as a short-term object for a single download,
+ * but can be used for multipe downloads of different textures or with different
+ * settings.
+ * 
+ * `GdkTextureDownloader` can be used to convert data between different formats.
+ * Create a `GdkTexture` for the existing format and then download it in a
+ * different format.
+ * @record 
+ */
+class TextureDownloader {
+
+    // Own properties of Gdk-4.0.Gdk.TextureDownloader
+
+    static name: string
+
+    // Constructors of Gdk-4.0.Gdk.TextureDownloader
+
+    /**
+     * Creates a new texture downloader for `texture`.
+     * @constructor 
+     * @param texture texture to download
+     * @returns A new texture downloader
+     */
+    constructor(texture: Texture) 
+    /**
+     * Creates a new texture downloader for `texture`.
+     * @constructor 
+     * @param texture texture to download
+     * @returns A new texture downloader
+     */
+    static new(texture: Texture): TextureDownloader
 }
 
 interface TimeCoord {

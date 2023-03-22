@@ -16,7 +16,8 @@ import type Gio from './Gio-2.0.js';
 import type GObject from './GObject-2.0.js';
 /// <reference path="GLib-2.0.d.ts" />
 import type GLib from './GLib-2.0.js';
-// WARN: Dependency not found: 'GUdev-1.0'
+/// <reference path="GUdev-1.0.d.ts" />
+import type GUdev from './GUdev-1.0.js';
 
 declare namespace Manette {
 

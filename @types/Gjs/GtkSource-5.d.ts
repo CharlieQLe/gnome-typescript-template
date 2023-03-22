@@ -316,6 +316,35 @@ enum SpaceTypeFlags {
     ALL,
 }
 /**
+ * Like gtk_source_get_major_version(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+const MAJOR_VERSION: number
+/**
+ * Like gtk_source_get_micro_version(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+const MICRO_VERSION: number
+/**
+ * Like gtk_source_get_minor_version(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+const MINOR_VERSION: number
+/**
+ * Like GTK_SOURCE_CHECK_VERSION, but the check for gtk_source_check_version is
+ * at runtime instead of compile time. This is useful for compiling
+ * against older versions of GtkSourceView, but using features from newer
+ * versions.
+ * @param major the major version to check
+ * @param minor the minor version to check
+ * @param micro the micro version to check
+ * @returns %TRUE if the version of the GtkSourceView currently loaded is the same as or newer than the passed-in version.
+ */
+function check_version(major: number, minor: number, micro: number): boolean
+/**
  * Gets all encodings.
  * @returns a list of all #GtkSourceEncoding's. Free with g_slist_free().
  */
@@ -357,6 +386,39 @@ function file_saver_error_quark(): GLib.Quark
  * main(). It can be called several times.
  */
 function finalize(): void
+/**
+ * Returns the major version number of the GtkSourceView library.
+ * (e.g. in GtkSourceView version 3.20.0 this is 3.)
+ * 
+ * This function is in the library, so it represents the GtkSourceView library
+ * your code is running against. Contrast with the #GTK_SOURCE_MAJOR_VERSION
+ * macro, which represents the major version of the GtkSourceView headers you
+ * have included when compiling your code.
+ * @returns the major version number of the GtkSourceView library
+ */
+function get_major_version(): number
+/**
+ * Returns the micro version number of the GtkSourceView library.
+ * (e.g. in GtkSourceView version 3.20.0 this is 0.)
+ * 
+ * This function is in the library, so it represents the GtkSourceView library
+ * your code is running against. Contrast with the #GTK_SOURCE_MICRO_VERSION
+ * macro, which represents the micro version of the GtkSourceView headers you
+ * have included when compiling your code.
+ * @returns the micro version number of the GtkSourceView library
+ */
+function get_micro_version(): number
+/**
+ * Returns the minor version number of the GtkSourceView library.
+ * (e.g. in GtkSourceView version 3.20.0 this is 20.)
+ * 
+ * This function is in the library, so it represents the GtkSourceView library
+ * your code is running against. Contrast with the #GTK_SOURCE_MINOR_VERSION
+ * macro, which represents the minor version of the GtkSourceView headers you
+ * have included when compiling your code.
+ * @returns the minor version number of the GtkSourceView library
+ */
+function get_minor_version(): number
 /**
  * Initializes the GtkSourceView library (e.g. for the internationalization).
  * 
@@ -550,7 +612,7 @@ interface CompletionProvider {
      * provider so that higher priority providers results are shown
      * above lower priority providers.
      * 
-     * Lower value indicates higher priority.
+     * Higher value indicates higher priority.
      * @param context a #GtkSourceCompletionContext
      */
     get_priority(context: CompletionContext): number
@@ -563,11 +625,15 @@ interface CompletionProvider {
      */
     get_title(): string | null
     /**
-     * This function is used to determine of a character inserted into the text
+     * This function is used to determine if a character inserted into the text
      * editor should cause a new completion request to be triggered.
      * 
      * An example would be period '.' which might indicate that the user wants
      * to complete method or field names of an object.
+     * 
+     * This method will only trigger when text is inserted into the #GtkTextBuffer
+     * while the completion list is visible and a proposal is selected. Incremental
+     * key-presses (like shift, control, or alt) are not triggerable.
      * @param iter a #GtkTextIter
      * @param ch a #gunichar of the character inserted
      */
@@ -683,7 +749,7 @@ interface CompletionProvider {
      * provider so that higher priority providers results are shown
      * above lower priority providers.
      * 
-     * Lower value indicates higher priority.
+     * Higher value indicates higher priority.
      * @virtual 
      * @param context a #GtkSourceCompletionContext
      */
@@ -698,11 +764,15 @@ interface CompletionProvider {
      */
     vfunc_get_title(): string | null
     /**
-     * This function is used to determine of a character inserted into the text
+     * This function is used to determine if a character inserted into the text
      * editor should cause a new completion request to be triggered.
      * 
      * An example would be period '.' which might indicate that the user wants
      * to complete method or field names of an object.
+     * 
+     * This method will only trigger when text is inserted into the #GtkTextBuffer
+     * while the completion list is visible and a proposal is selected. Incremental
+     * key-presses (like shift, control, or alt) are not triggerable.
      * @virtual 
      * @param iter a #GtkTextIter
      * @param ch a #gunichar of the character inserted
@@ -6993,7 +7063,7 @@ interface SearchContext {
      * [property`SearchSettings:`search-text] breaks a rule, the error can be
      * retrieved with this function.
      * 
-     * The error domain is [enum`GLib`.RegexError].
+     * The error domain is [error`GLib`.RegexError].
      * 
      * Free the return value with [method`GLib`.Error.free].
      * @returns the #GError, or %NULL if the   pattern is valid.
