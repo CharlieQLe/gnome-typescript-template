@@ -4,7 +4,6 @@
     <file>widgets/mainWindow.js</file>
     <file>widgets/settingsWindow.js</file>
     
-    <file>app.js</file>
     <file>main.js</file>
     <file>settings.js</file>
     <file>utility.js</file>

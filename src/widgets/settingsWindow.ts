@@ -1,7 +1,6 @@
 import Adw from "gi://Adw";
 import GObject from "gi://GObject";
-
-import * as Settings from "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/settings.js";
+import * as Settings from "../settings.js";
 
 export class SettingsWindow extends Adw.PreferencesWindow {
     private _themeCombo!: Adw.ComboRow;
