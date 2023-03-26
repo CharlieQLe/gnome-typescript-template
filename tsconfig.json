@@ -1,30 +1,10 @@
 {
+    "extends": "./tsconfig.alias.json",
     "compilerOptions": {
         "experimentalDecorators": true,
         "skipLibCheck": true,
         "strict": true,
         "allowJs": true,
-        "paths": {
-            "*": [
-                "@types/*",
-                "@types/gi-types/*"
-            ],
-            "resource:///io/github/charlieqle/GnomeTypescriptTemplate/js/*": [ "src/*" ],
-            "gi://Adw?version=1": ["./@types/Gjs/Adw-1.d.ts"],
-            "gi://Adw": ["./@types/Gjs/Adw-1.d.ts"],
-            "gi://Gtk?version=4.0": ["./@types/Gjs/Gtk-4.0.d.ts"],
-            "gi://Gtk": ["./@types/Gjs/Gtk-4.0.d.ts"],
-            "gi://GObject?version=2.0": ["./@types/Gjs/GObject-2.0.d.ts"],
-            "gi://GObject": ["./@types/Gjs/GObject-2.0.d.ts"],
-            "gi://Gio?version=2.0": ["./@types/Gjs/Gio-2.0.d.ts"],
-            "gi://Gio": ["./@types/Gjs/Gio-2.0.d.ts"],
-            "gi://GLib?version=2.0": ["./@types/Gjs/GLib-2.0.d.ts"],
-            "gi://GLib": ["./@types/Gjs/GLib-2.0.d.ts"],
-            "gi://Gdk?version=4.0": ["./@types/Gjs/Gdk-4.0.d.ts"],
-            "gi://Gdk": ["./@types/Gjs/Gdk-4.0.d.ts"],
-            "gi://GdkPixbuf?version=2.0": ["./@types/Gjs/GdkPixbuf-2.0.d.ts"],
-            "gi://GdkPixbuf": ["./@types/Gjs/GdkPixbuf-2.0.d.ts"],
-	    },
 	    "target": "ES2021",
         "baseUrl": ".",
         "moduleResolution": "node",
@@ -32,10 +12,13 @@
         "outDir": "tsc-out",
         "lib": [ "ES2021" ]
     },
+    "exclude": [
+        "@types/**/*"
+    ],
     "include": [
-        "@types/**/*",
-        "@types/*",
-        "src/**/*",
-        "src/*"
+        "src/**/*"
+    ],
+    "files": [
+        "@types/Gjs/index.d.ts"
     ]
 }
