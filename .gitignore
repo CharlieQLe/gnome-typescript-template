@@ -1,7 +1,7 @@
 node_modules
 .flatpak
-/subprojects/blueprint-compiler
-/*.log
-.vscode
 _build
+.vscode
 girs
+/subprojects/blueprint-compiler
+*.log

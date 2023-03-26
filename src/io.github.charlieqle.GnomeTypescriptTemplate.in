@@ -22,4 +22,4 @@ import("resource://@resource_path@/js/main.js")
     });
   })
   .catch(logError);
-loop.run();
+loop.runAsync();

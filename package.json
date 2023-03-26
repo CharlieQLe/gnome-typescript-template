@@ -21,6 +21,7 @@
   },
   "scripts": {
     "compile:rollup": "rollup -c",
+    "compile:ts": "tsc --strict",
     "copy:girs": "sh scripts/copy_girs.sh",
     "download:deps": "sh scripts/download_deps.sh",
     "generate:gi": "ts-for-gir generate --configName='.ts-for-girrc.js'",
