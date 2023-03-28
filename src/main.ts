@@ -2,17 +2,21 @@ import Adw from "gi://Adw?version=1";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import GObject from "gi://GObject";
-import Gtk from "gi://Gtk?version=4.0";
 import * as Settings from "./settings.js";
 import { MainWindow } from "./widgets/mainWindow.js";
 import { SettingsWindow } from "./widgets/settingsWindow.js";
 
 pkg.initGettext();
-pkg.initFormat();
+pkg.require({
+    "Adw": "1.0",
+    "Gio": "2.0",
+    "GLib": "2.0",
+    "GObject": "2.0",
+    "Gtk": "4.0",
+});
 
 export function main(argv: string[]) {
-    const application = new TemplateApp();
-    return application.run(argv);
+    return new TemplateApp().run(argv);
 }
 
 export class TemplateApp extends Adw.Application {
@@ -24,12 +28,13 @@ export class TemplateApp extends Adw.Application {
 
     public constructor() {
         super({ application_id: pkg.name, flags: Gio.ApplicationFlags.FLAGS_NONE });
+        GLib.set_application_name("GNOME Typescript Template");
 
         // Add actions
         this._addAction("quit", _ => this.quit(), null);
         this._addAction("about", _ => new Adw.AboutWindow({
             transient_for: this._mainWindow,
-            application_name: "GNOME Typescript Template",
+            application_name: GLib.get_application_name(),
             application_icon: pkg.name,
             developer_name: "Charlie Le",
             version: pkg.version,
