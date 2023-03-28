@@ -14,7 +14,7 @@ template SettingsWindow : Adw.PreferencesWindow {
                         "Dark"
                     ]
                 };
-                notify::selected => $onThemeChanged();
+                notify::selected => onThemeChanged();
             }
         }
     }
