@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Gnome Typescript Template
-Exec=gnome-typescript-template
+Exec=io.github.charlieqle.GnomeTypescriptTemplate
 Icon=io.github.charlieqle.GnomeTypescriptTemplate
 Terminal=false
 Type=Application

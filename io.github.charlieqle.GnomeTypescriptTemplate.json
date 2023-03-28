@@ -6,7 +6,7 @@
     "sdk-extensions": [
         "org.freedesktop.Sdk.Extension.node18"
     ],
-    "command" : "gnome-typescript-template",
+    "command" : "io.github.charlieqle.GnomeTypescriptTemplate",
     "build-options": {
         "append-path": "/usr/lib/sdk/node18/bin",
         "env": {
@@ -33,7 +33,7 @@
     ],
     "modules" : [
         {
-            "name" : "gnome-typescript-template",
+            "name" : "io.github.charlieqle.GnomeTypescriptTemplate",
             "builddir" : true,
             "buildsystem" : "meson",
             "config-opts": [

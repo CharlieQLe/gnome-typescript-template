@@ -13,8 +13,8 @@ typescript = custom_target('typescript-compile',
 
 ##################
 
-src_res = gnome.compile_resources(application_id + '.src',
-  application_id + '.src.gresource.xml',
+src_res = gnome.compile_resources(meson.project_name() + '.src',
+  meson.project_name() + '.src.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
@@ -32,8 +32,8 @@ bin_conf.set('datadir', join_paths(get_option('prefix'), get_option('datadir')))
 bin_conf.set('resource_path', resource_path)
 
 configure_file(
-  input: application_id + '.in',
-  output: application_id,
+  input: meson.project_name() + '.in',
+  output: meson.project_name(),
   configuration: bin_conf,
   install: true,
   install_dir: get_option('bindir')

@@ -12,8 +12,8 @@ blueprints = custom_target('blueprints',
   command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
 )
 
-data_res = gnome.compile_resources(application_id + '.data',
-  application_id + '.data.gresource.xml',
+data_res = gnome.compile_resources(meson.project_name() + '.data',
+  meson.project_name() + '.data.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,

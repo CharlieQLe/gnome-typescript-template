@@ -1,4 +1,4 @@
-project('gnome-typescript-template',
+project('io.github.charlieqle.GnomeTypescriptTemplate',
           version: '0.1.0',
     meson_version: '>= 0.61.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
@@ -7,9 +7,8 @@ project('gnome-typescript-template',
 i18n = import('i18n')
 gnome = import('gnome')
 
-application_id = 'io.github.charlieqle.GnomeTypescriptTemplate'
 pkgdatadir = join_paths(get_option('datadir'), meson.project_name())
-resource_path = '/' + application_id.replace('.', '/')
+resource_path = '/' + meson.project_name().replace('.', '/')
 
 ### YARN ###
 
@@ -38,12 +37,6 @@ yarn_deps = custom_target('yarn-deps',
 subdir('data')
 subdir('src')
 subdir('po')
-
-install_symlink(
-  meson.project_name(),
-  pointing_to: join_paths(get_option('prefix'), get_option('bindir'), application_id),
-  install_dir: join_paths(get_option('prefix'), get_option('bindir'))
-)
 
 gnome.post_install(
      glib_compile_schemas: true,
