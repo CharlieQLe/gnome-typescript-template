@@ -13,7 +13,7 @@ blueprints = custom_target('blueprints',
 )
 
 data_res = gnome.compile_resources(meson.project_name() + '.data',
-  meson.project_name() + '.data.gresource.xml',
+  'data.gresource.xml',
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,

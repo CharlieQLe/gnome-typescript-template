@@ -1,5 +1,5 @@
 desktop_file = i18n.merge_file(
-        input: meson.project_name() + '.desktop.in',
+        input: 'desktop.in',
        output: meson.project_name() + '.desktop',
          type: 'desktop',
        po_dir: '../po',
@@ -13,10 +13,14 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-        input: meson.project_name() + '.appdata.xml.in',
-       output: meson.project_name() + '.appdata.xml',
-       po_dir: '../po',
-      install: true,
+  input: configure_file(
+      input: 'appdata.xml.in',
+      output: meson.project_name() + '.appdata.xml.in',
+      copy: true
+  ),
+  output: meson.project_name() + '.appdata.xml',
+  po_dir: '../po',
+  install: true,
   install_dir: join_paths(get_option('datadir'), 'appdata')
 )
 
@@ -25,7 +29,11 @@ if appstream_util.found()
   test('Validate appstream file', appstream_util, args: ['validate', appstream_file])
 endif
 
-install_data(meson.project_name() + '.gschema.xml',
+install_data(configure_file(
+    input: 'gschema.xml',
+    output: meson.project_name() + '.gschema.xml',
+    copy: true
+  ),
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 
