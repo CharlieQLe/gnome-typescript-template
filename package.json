@@ -6,10 +6,10 @@
   "author": "Charlie Le <20309750+CharlieQLe@users.noreply.github.com>",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@girs/gjs": "^3.0.0-beta.12",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@ts-for-gir/cli": "^3.0.0-beta.12",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "eslint": "^8.33.0",
@@ -22,6 +22,7 @@
     "compile:ts": "tsc --strict",
     "copy:girs": "sh scripts/copy_girs.sh",
     "download:deps": "sh scripts/download_deps.sh",
+    "generate:gi": "ts-for-gir generate --configName='.ts-for-girrc.js'",
     "generate:sources": "sh scripts/generate_sources.sh"
   }
 }
