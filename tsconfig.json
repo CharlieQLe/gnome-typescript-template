@@ -1,4 +1,7 @@
 {
     "extends": "gnome-flatpak-types/tsconfig.gnome.json",
+    "compilerOptions": {
+        "outDir": "tsc-out"
+    },
     "include": [ "src/**/*" ]
 }
