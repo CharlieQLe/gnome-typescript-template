@@ -1,21 +1,4 @@
 {
-    "extends": "./tsconfig.alias.json",
-    "compilerOptions": {
-        "experimentalDecorators": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "allowJs": true,
-	    "target": "ES2021",
-        "baseUrl": ".",
-        "moduleResolution": "node",
-        "module": "ES2020",
-        "outDir": "tsc-out",
-        "lib": [ "ES2021" ]
-    },
-    "include": [
-        "src/**/*",
-    ],
-    "files": [
-        "@types/Gjs/index.d.ts"
-    ]
+    "extends": "gnome-flatpak-types/tsconfig.gnome.json",
+    "include": [ "src/**/*" ]
 }
