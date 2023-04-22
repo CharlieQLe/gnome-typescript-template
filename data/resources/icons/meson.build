@@ -1,7 +1,7 @@
 install_data(
   configure_file(
     input: 'app.svg',
-    output: application_id + '.svg',
+    output: meson.project_name() + '.svg',
     copy: true
   ),
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps')
@@ -10,7 +10,7 @@ install_data(
 install_data(
   configure_file(
     input: 'app-symbolic.svg',
-    output: application_id + '-symbolic.svg',
+    output: meson.project_name() + '-symbolic.svg',
     copy: true
   ),
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'symbolic', 'apps')
