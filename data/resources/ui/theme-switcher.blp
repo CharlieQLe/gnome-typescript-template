@@ -1,0 +1,72 @@
+using Gtk 4.0;
+using Adw 1;
+
+template ThemeSwitcher : Adw.Bin {
+    child: Gtk.Box {
+        orientation: horizontal;
+        homogeneous: true;
+        spacing: 18;
+
+        Gtk.Overlay {
+            halign: center;
+            
+            Gtk.CheckButton systemSelector {
+                tooltip-text: "Follow system";
+                notify::active => onThemeCheckActiveChanged();
+                styles ["system"]
+            }
+
+            [overlay]
+            Gtk.Image {
+                visible: bind systemSelector.active;
+                icon-name: "theme-check-symbolic";
+                pixel-size: 13;
+                halign: end;
+                valign: end;
+                styles ["check"]
+            }
+        }
+
+        Gtk.Overlay {
+            halign: center;
+            
+            Gtk.CheckButton lightSelector {
+                tooltip-text: "Use Light colors";
+                group: systemSelector;
+                notify::active => onThemeCheckActiveChanged();
+                styles ["light"]
+            }
+
+            [overlay]
+            Gtk.Image {
+                visible: bind lightSelector.active;
+                icon-name: "theme-check-symbolic";
+                pixel-size: 13;
+                halign: end;
+                valign: end;
+                styles ["check"]
+            }
+        }
+
+        Gtk.Overlay {
+            halign: center;
+            
+            Gtk.CheckButton darkSelector {
+                tooltip-text: "Use Dark colors";
+                group: systemSelector;
+                notify::active => onThemeCheckActiveChanged();
+                styles ["dark"]
+            }
+
+            [overlay]
+            Gtk.Image {
+                visible: bind darkSelector.active;
+                icon-name: "theme-check-symbolic";
+                pixel-size: 13;
+                halign: end;
+                valign: end;
+                styles ["check"]
+            }
+        }
+    };
+}

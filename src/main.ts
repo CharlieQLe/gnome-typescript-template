@@ -5,6 +5,7 @@ import GObject from "gi://GObject";
 import * as Settings from "./settings.js";
 import { MainWindow } from "./widgets/mainWindow.js";
 import { SettingsWindow } from "./widgets/settingsWindow.js";
+import { ThemeSwitcher } from "./widgets/themeSwitcher.js";
 
 pkg.initGettext();
 pkg.require({
@@ -16,6 +17,8 @@ pkg.require({
 });
 
 export function main(argv: string[]) {
+    [ThemeSwitcher.$gtype].forEach(gtype => GObject.type_ensure(gtype));
+
     return new TemplateApp().run(argv);
 }
 

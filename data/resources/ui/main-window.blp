@@ -1,23 +1,12 @@
 using Gtk 4.0;
 using Adw 1;
 
-template MainWindow : Adw.ApplicationWindow {
-    default-width: 600;
-    default-height: 500;
-    content: Gtk.Box {
-        orientation: vertical;
-
-        Adw.HeaderBar {
-            [end]
-            Gtk.MenuButton {
-                icon-name: "open-menu-symbolic";
-                menu-model: primary_menu;
-            }
-        }
-    };
-}
-
 menu primary_menu {
+    section {
+        item {
+            custom: "theme-switcher";
+        }
+    }
     section {
         item {
             label: _("_Preferences");
@@ -34,4 +23,27 @@ menu primary_menu {
             action: "app.about";
         }
     }
+}
+
+template MainWindow : Adw.ApplicationWindow {
+    default-width: 600;
+    default-height: 500;
+    content: Gtk.Box {
+        orientation: vertical;
+
+        Adw.HeaderBar {
+            [end]
+            Gtk.MenuButton {
+                can-focus: false;
+                receives-default: true;
+                icon-name: "open-menu-symbolic";
+                popover: Gtk.PopoverMenu {
+                    menu-model: primary_menu;
+
+                    [theme-switcher]
+                    .ThemeSwitcher themeSwitcher { }
+                };
+            }
+        }
+    };
 }

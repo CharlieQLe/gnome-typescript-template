@@ -6,5 +6,9 @@
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
     <file preprocess="xml-stripblanks">ui/main-window.ui</file>
     <file preprocess="xml-stripblanks">ui/settings-window.ui</file>
+    <file preprocess="xml-stripblanks">ui/theme-switcher.ui</file>
+  </gresource>
+  <gresource prefix="/io/github/charlieqle/GnomeTypescriptTemplate/icons/scalable/actions">
+    <file alias="theme-check-symbolic.svg">icons/theme-check-symbolic.svg</file>
   </gresource>
 </gresources>
