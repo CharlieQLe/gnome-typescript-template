@@ -680,10 +680,10 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-gnome-flatpak-types@^44.0.0:
-  version "44.0.0"
-  resolved "https://registry.yarnpkg.com/gnome-flatpak-types/-/gnome-flatpak-types-44.0.0.tgz#0bb1e2f60e54c4571924c77cc4dba74e85baa73d"
-  integrity sha512-J4sfsxB4osmOnlzDfWEoAggNRsFymhsJzszHSPPHZ6p3PFUgLYaTB37vk8Mmn2keMDH7IVzUth121P34Qp0ZHA==
+gnome-flatpak-types@44.0.1:
+  version "44.0.1"
+  resolved "https://registry.yarnpkg.com/gnome-flatpak-types/-/gnome-flatpak-types-44.0.1.tgz#2e0558eb866b6dda8081b4be2b6e8cfb6a53c934"
+  integrity sha512-KKzfgt0k4z6nj0fIs9ZYU24iPx7qlxETNaeia44Gbbthbrb8in9+TiNylicw2MW2Jo7nPwJZHRtYwVLpJhiJeQ==
   dependencies:
     typescript "^5.0.4"
 

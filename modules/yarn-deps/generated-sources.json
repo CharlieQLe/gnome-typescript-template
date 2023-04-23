@@ -1702,9 +1702,9 @@
     },
     {
         "type": "file",
-        "url": "https://registry.yarnpkg.com/gnome-flatpak-types/-/gnome-flatpak-types-44.0.0.tgz#0bb1e2f60e54c4571924c77cc4dba74e85baa73d",
-        "sha512": "278b1fb31078a2c98e9e5cc37d612802080d46c1729a1b09ceccc748f3c767aa773c55202d8693077eef93c3269f691e3031fb215cd4b61d76d4fdf8429d191c",
-        "dest-filename": "gnome-flatpak-types-44.0.0.tgz",
+        "url": "https://registry.yarnpkg.com/gnome-flatpak-types/-/gnome-flatpak-types-44.0.1.tgz#2e0558eb866b6dda8081b4be2b6e8cfb6a53c934",
+        "sha512": "28acdf82dd24e33ea78f47c8b3d658536e223f1eea97111335a7a26b8e066dbb616eb6fc8a7f7e4e2372962730d8c5b6268ee73f02591d1b58c152e926188979",
+        "dest-filename": "gnome-flatpak-types-44.0.1.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {
