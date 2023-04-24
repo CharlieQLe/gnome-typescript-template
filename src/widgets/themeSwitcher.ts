@@ -1,12 +1,14 @@
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import Gtk from "gi://Gtk?version=4.0";
-import * as Settings from "../settings.js";
 
 export class ThemeSwitcher extends Adw.Bin {
     private _systemSelector!: Gtk.CheckButton;
     private _lightSelector!: Gtk.CheckButton;
     private _darkSelector!: Gtk.CheckButton;
+    private _settings: Gio.Settings;
+    private _styleManager: Adw.StyleManager;
 
     static {
         GObject.registerClass({
@@ -17,49 +19,38 @@ export class ThemeSwitcher extends Adw.Bin {
     }
 
     constructor() {
-        super({
-            css_name: "themeswitcher",
+        super({ css_name: "themeswitcher" });
+
+        // Settings
+        this._settings = Gio.Settings.new(pkg.name as string);
+
+        // Get style manager
+        this._styleManager = (Adw.Application.get_default() as Adw.Application).get_style_manager();
+
+        // Bind theme
+        this._styleManager.set_color_scheme(this._settings.get_int("color-scheme"));
+        this._styleManager.connect("notify::color-scheme", (_, __) => {
+            const colorScheme = this._styleManager.get_color_scheme();
+            this._settings.set_int("color-scheme", colorScheme);
+            this._syncButtons();
         });
 
         // Set active theme
-        switch (Settings.Theme.get()) {
-            case Settings.ETheme.Light: {
-                this._lightSelector.set_active(true);
-                this._systemSelector.set_active(false);
-                break;
-            }
-            case Settings.ETheme.Dark: {
-                this._darkSelector.set_active(true);
-                this._systemSelector.set_active(false);
-                break;
-            }
-            default: {
-                this._systemSelector.set_active(true);
-                break;
-            }
-        }
+        this._syncButtons();
+    }
+
+    private _syncButtons() {
+        const colorScheme = this._styleManager.get_color_scheme();
+        this._systemSelector.set_active(colorScheme === Adw.ColorScheme.DEFAULT);
+        this._lightSelector.set_active(colorScheme === Adw.ColorScheme.FORCE_LIGHT);
+        this._darkSelector.set_active(colorScheme === Adw.ColorScheme.FORCE_DARK);
     }
 
     private onThemeCheckActiveChanged(_: Gtk.CheckButton) {
-        let theme: Settings.ETheme = Settings.ETheme.System;
-        if (this._lightSelector.get_active()) theme = Settings.ETheme.Light;
-        else if (this._darkSelector.get_active()) theme = Settings.ETheme.Dark;
-        switch (theme) {
-            case Settings.ETheme.Light: {
-                this._lightSelector.set_active(true);
-                this._systemSelector.set_active(false);
-                break;
-            }
-            case Settings.ETheme.Dark: {
-                this._darkSelector.set_active(true);
-                this._systemSelector.set_active(false);
-                break;
-            }
-            default: {
-                this._systemSelector.set_active(true);
-                break;
-            }
-        }
-        Settings.Theme.set(theme);
+        let colorScheme = Adw.ColorScheme.DEFAULT;
+        if (this._lightSelector.get_active()) colorScheme = Adw.ColorScheme.FORCE_LIGHT;
+        else if (this._darkSelector.get_active()) colorScheme = Adw.ColorScheme.FORCE_DARK;
+        this._styleManager.set_color_scheme(colorScheme);
+        this._syncButtons();
     }
 }

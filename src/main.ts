@@ -2,10 +2,8 @@ import Adw from "gi://Adw?version=1";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import GObject from "gi://GObject";
-import * as Settings from "./settings.js";
 import { MainWindow } from "./widgets/mainWindow.js";
 import { SettingsWindow } from "./widgets/settingsWindow.js";
-import { ThemeSwitcher } from "./widgets/themeSwitcher.js";
 
 pkg.initGettext();
 pkg.require({
@@ -17,8 +15,6 @@ pkg.require({
 });
 
 export function main(argv: string[]) {
-    [ThemeSwitcher.$gtype].forEach(gtype => GObject.type_ensure(gtype));
-
     return new TemplateApp().run(argv);
 }
 
@@ -48,10 +44,6 @@ export class TemplateApp extends Adw.Application {
 
         // Set accels
         this.set_accels_for_action("app.quit", ["<primary>q"]);
-
-        // Set color scheme
-        this._setTheme(Settings.Theme.get());
-        Settings.Theme.connect(_ => this._setTheme(Settings.Theme.get()));
     }
 
     /// FUNCS
@@ -61,15 +53,6 @@ export class TemplateApp extends Adw.Application {
         action.connect("activate", callback);
         this.add_action(action);
         return action;
-    }
-
-    private _setTheme(theme: Settings.ETheme) {
-        let colorScheme = Adw.ColorScheme.DEFAULT;
-        switch (theme) {
-            case Settings.ETheme.Light: colorScheme = Adw.ColorScheme.FORCE_LIGHT; break;
-            case Settings.ETheme.Dark: colorScheme = Adw.ColorScheme.FORCE_DARK; break;
-        }
-        this.get_style_manager().set_color_scheme(colorScheme);
     }
 
     /// VFUNCS

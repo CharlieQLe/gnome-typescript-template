@@ -2,8 +2,8 @@
 <gresources>
   <gresource prefix="/io/github/charlieqle/GnomeTypescriptTemplate/js">
     <file>main.js</file>
-    <file>settings.js</file>
     <file>widgets/mainWindow.js</file>
+    <file>widgets/menuButton.js</file>
     <file>widgets/settingsWindow.js</file>
     <file>widgets/themeSwitcher.js</file>
   </gresource>
