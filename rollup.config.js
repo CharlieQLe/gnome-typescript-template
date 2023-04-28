@@ -7,18 +7,18 @@ import dts from 'rollup-plugin-dts';
 export default [
     ...
     {
-        input: 'path/to/module/js',
+        input: 'path/to/modulename.js',
         output: {
             file: 'src/vendor/modulename.js,
         },
         plugins: [nodeResolve(), commonjs(), ...],
     },
     {
-        input: 'path/to/module/d.ts',
+        input: 'path/to/modulename.d.ts',
         output: {
             file: 'src/vendor/modulename.d.js,
         },
-        plugins: [dts()],
+        plugins: [dts({ respectExternal: true })],
     },
     ...
 ]
