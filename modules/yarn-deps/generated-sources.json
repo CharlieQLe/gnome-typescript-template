@@ -50,6 +50,20 @@
     },
     {
         "type": "file",
+        "url": "https://registry.yarnpkg.com/@gnome-flatpak-types/base-ambient/-/base-ambient-44.0.0.tgz#c3e4cbf0cefffbca279bc6fc72329f62dc8819f3",
+        "sha512": "23c137bdd5a55af3e7c8d7cca083239e2ecaad86ae67c90819545ae60b4f52a78594606e4570cbad7fdce384f5dc4fd050723a93f89e5c8af5aedf1df7e9eb0d",
+        "dest-filename": "@gnome-flatpak-types-base-ambient-44.0.0.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
+        "url": "https://registry.yarnpkg.com/@gnome-flatpak-types/base/-/base-44.0.0.tgz#bec5d3ef916c5574253c63cf5a5e149afe2330f9",
+        "sha512": "9fc93757aef2e26ee82409016ffe3d25cb9202fabdf7ab53037277056cea8c9a48a0a722a80f50b88520780c260acb2185442ce136718778b4c77fbd5ec5bdaf",
+        "dest-filename": "@gnome-flatpak-types-base-44.0.0.tgz",
+        "dest": "flatpak-node/yarn-mirror"
+    },
+    {
+        "type": "file",
         "url": "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9",
         "sha512": "5326c7209cc99d1e5073f32c0fd2abf91a4eda1fbf3f51a13b07622cf5cae535a4e6c81376ef3c6d30fd50ff8229b3cf8794678b5bb41a301d6102de986f20fa",
         "dest-filename": "@humanwhocodes-config-array-0.11.8.tgz",
@@ -1698,13 +1712,6 @@
         "url": "https://registry.yarnpkg.com/globby/-/globby-11.1.0.tgz#bd4be98bb042f83d796f7e3811991fbe82a0d34b",
         "sha512": "8e121768ecf2d6c6fc232a1c6abb964a7d538e69c156cf00ca1732f37ae6c4d27cab6b96282023dc29c963e2a91925c2b9e00f7348b4e6456f54ab4fd6df52de",
         "dest-filename": "globby-11.1.0.tgz",
-        "dest": "flatpak-node/yarn-mirror"
-    },
-    {
-        "type": "file",
-        "url": "https://registry.yarnpkg.com/gnome-flatpak-types/-/gnome-flatpak-types-44.0.1.tgz#2e0558eb866b6dda8081b4be2b6e8cfb6a53c934",
-        "sha512": "28acdf82dd24e33ea78f47c8b3d658536e223f1eea97111335a7a26b8e066dbb616eb6fc8a7f7e4e2372962730d8c5b6268ee73f02591d1b58c152e926188979",
-        "dest-filename": "gnome-flatpak-types-44.0.1.tgz",
         "dest": "flatpak-node/yarn-mirror"
     },
     {

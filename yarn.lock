@@ -55,6 +55,20 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.39.0.tgz#58b536bcc843f4cd1e02a7e6171da5c040f4d44b"
   integrity sha512-kf9RB0Fg7NZfap83B3QOqOGg9QmD9yBudqQXzzOtn3i4y7ZUXe5ONeW34Gwi+TxhH4mvj72R1Zc300KUMa9Bng==
 
+"@gnome-flatpak-types/base-ambient@^44.0.0":
+  version "44.0.0"
+  resolved "https://registry.yarnpkg.com/@gnome-flatpak-types/base-ambient/-/base-ambient-44.0.0.tgz#c3e4cbf0cefffbca279bc6fc72329f62dc8819f3"
+  integrity sha512-I8E3vdWlWvPnyNfMoIMjni7KrYauZ8kIGVRa5gtPUqeFlGBuRXDLrX/c44T13E/QUHI6k/ieXIr1rt8d9+nrDQ==
+  dependencies:
+    typescript "^5.0.4"
+
+"@gnome-flatpak-types/base@^44.0.0":
+  version "44.0.0"
+  resolved "https://registry.yarnpkg.com/@gnome-flatpak-types/base/-/base-44.0.0.tgz#bec5d3ef916c5574253c63cf5a5e149afe2330f9"
+  integrity sha512-n8k3V67y4m7oJAkBb/49JcuSAvq996tTA3J3BWzqjJpIoKciqA9QuIUgeAwmCsshhUQs4TZxh3i0x3+9XsW9rw==
+  dependencies:
+    typescript "^5.0.4"
+
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.8.tgz#03595ac2075a4dc0f191cc2131de14fbd7d410b9"
@@ -679,13 +693,6 @@ globby@^11.1.0:
     ignore "^5.2.0"
     merge2 "^1.4.1"
     slash "^3.0.0"
-
-gnome-flatpak-types@44.0.1:
-  version "44.0.1"
-  resolved "https://registry.yarnpkg.com/gnome-flatpak-types/-/gnome-flatpak-types-44.0.1.tgz#2e0558eb866b6dda8081b4be2b6e8cfb6a53c934"
-  integrity sha512-KKzfgt0k4z6nj0fIs9ZYU24iPx7qlxETNaeia44Gbbthbrb8in9+TiNylicw2MW2Jo7nPwJZHRtYwVLpJhiJeQ==
-  dependencies:
-    typescript "^5.0.4"
 
 grapheme-splitter@^1.0.4:
   version "1.0.4"
