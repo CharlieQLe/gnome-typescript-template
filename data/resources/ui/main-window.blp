@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template MainWindow : Adw.ApplicationWindow {
+template $MainWindow : Adw.ApplicationWindow {
     default-width: 600;
     default-height: 500;
     content: Gtk.Box {
@@ -9,7 +9,7 @@ template MainWindow : Adw.ApplicationWindow {
 
         Adw.HeaderBar {
             [end]
-            .MenuButton { }
+            $MenuButton { }
         }
     };
 }

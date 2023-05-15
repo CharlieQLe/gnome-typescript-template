@@ -1,7 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template ThemeSwitcher : Adw.Bin {
+template $ThemeSwitcher : Adw.Bin {
     child: Gtk.Box {
         orientation: horizontal;
         homogeneous: true;
@@ -12,7 +12,7 @@ template ThemeSwitcher : Adw.Bin {
             
             Gtk.CheckButton systemSelector {
                 tooltip-text: "Follow system";
-                notify::active => onThemeCheckActiveChanged();
+                notify::active => $onThemeCheckActiveChanged();
                 styles ["system"]
             }
 
@@ -33,7 +33,7 @@ template ThemeSwitcher : Adw.Bin {
             Gtk.CheckButton lightSelector {
                 tooltip-text: "Use Light colors";
                 group: systemSelector;
-                notify::active => onThemeCheckActiveChanged();
+                notify::active => $onThemeCheckActiveChanged();
                 styles ["light"]
             }
 
@@ -54,7 +54,7 @@ template ThemeSwitcher : Adw.Bin {
             Gtk.CheckButton darkSelector {
                 tooltip-text: "Use Dark colors";
                 group: systemSelector;
-                notify::active => onThemeCheckActiveChanged();
+                notify::active => $onThemeCheckActiveChanged();
                 styles ["dark"]
             }
 

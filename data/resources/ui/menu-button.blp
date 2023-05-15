@@ -25,7 +25,7 @@ menu primary_menu {
     }
 }
 
-template MenuButton : Adw.Bin {
+template $MenuButton : Adw.Bin {
     child: Gtk.MenuButton {
         can-focus: false;
         receives-default: true;
@@ -34,7 +34,7 @@ template MenuButton : Adw.Bin {
             menu-model: primary_menu;
 
             [theme-switcher]
-            .ThemeSwitcher { }
+            $ThemeSwitcher { }
         };
     };
 }
