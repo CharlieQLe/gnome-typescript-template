@@ -6,8 +6,12 @@
   "author": "Charlie Le <20309750+CharlieQLe@users.noreply.github.com>",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@gnome-flatpak-types/base": "^44.0.0",
-    "@gnome-flatpak-types/base-ambient": "^44.0.0",
+    "@girs/adw-1": "^1.3.2-3.0.1",
+    "@girs/gio-2.0": "^2.76.1-3.0.1",
+    "@girs/gjs": "^3.0.1",
+    "@girs/glib-2.0": "^2.76.1-3.0.1",
+    "@girs/gobject-2.0": "^2.76.1-3.0.1",
+    "@girs/gtk-4.0": "^4.10.3-3.0.1",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
@@ -20,7 +24,7 @@
   },
   "scripts": {
     "compile:rollup": "rollup -c",
-    "compile:ts": "tsc --strict",
+    "compile:ts": "tsc --strict --outDir tsc-out",
     "download:deps": "sh scripts/download_deps.sh",
     "generate:sources": "sh scripts/generate_sources.sh"
   }

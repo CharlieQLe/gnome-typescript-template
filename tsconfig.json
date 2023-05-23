@@ -5,12 +5,17 @@
         "strict": true,
         "allowJs": true,
 	    "target": "ES2021",
-        "moduleResolution": "node16",
+        "moduleResolution": "node",
         "module": "ES2020",
-        "lib": [ "ES2021" ]
+        "lib": [ "ES2021" ],
+        "noImplicitAny": false
     },
     "include": [
-        "src/**/*",
+        "./src/**/*",
+        "node_modules/@girs/**/*",
+    ],
+    "exclude": [
+        "tsc-out"
     ],
     "files": [
         "@types/global.d.ts",

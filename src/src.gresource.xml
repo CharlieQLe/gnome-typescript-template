@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/io/github/charlieqle/GnomeTypescriptTemplate/js">
-    <file>main.js</file>
-    <file>widgets/mainWindow.js</file>
-    <file>widgets/menuButton.js</file>
-    <file>widgets/settingsWindow.js</file>
-    <file>widgets/themeSwitcher.js</file>
+    <file alias="main.js">src/main.js</file>
+    <file alias="widgets/mainWindow.js">src/widgets/mainWindow.js</file>
+    <file alias="widgets/menuButton.js">src/widgets/menuButton.js</file>
+    <file alias="widgets/settingsWindow.js">src/widgets/settingsWindow.js</file>
+    <file alias="widgets/themeSwitcher.js">src/widgets/themeSwitcher.js</file>
   </gresource>
 </gresources>

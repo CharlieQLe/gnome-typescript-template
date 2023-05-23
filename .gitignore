@@ -4,3 +4,5 @@ _build
 .vscode
 /subprojects/blueprint-compiler
 *.log
+tsc-out
+.flatpak-builder
