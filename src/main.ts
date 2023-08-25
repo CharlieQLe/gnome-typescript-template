@@ -1,7 +1,7 @@
 import Adw from "gi://Adw?version=1";
-import Gio from "gi://Gio";
-import GLib from "gi://GLib";
-import GObject from "gi://GObject";
+import Gio from "gi://Gio?version=2.0";
+import GLib from "gi://GLib?version=2.0";
+import GObject from "gi://GObject?version=2.0";
 import { MainWindow } from "./widgets/mainWindow.js";
 import { SettingsWindow } from "./widgets/settingsWindow.js";
 

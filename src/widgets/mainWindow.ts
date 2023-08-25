@@ -1,9 +1,10 @@
-import Adw from "gi://Adw";
-import GObject from "gi://GObject";
+import Adw from "gi://Adw?version=1";
+import GObject from "gi://GObject?version=2.0";
 import { MenuButton } from "./menuButton.js";
 
 export class MainWindow extends Adw.ApplicationWindow {
     static {
+        GObject.type_ensure(MenuButton.$gtype);
         GObject.registerClass({
             GTypeName: "MainWindow",
             Template: "resource:///io/github/charlieqle/GnomeTypescriptTemplate/ui/main-window.ui",
@@ -12,6 +13,5 @@ export class MainWindow extends Adw.ApplicationWindow {
 
     constructor(application: Adw.Application) {
         super({ application });
-        GObject.type_ensure(MenuButton.$gtype);
     }
 }

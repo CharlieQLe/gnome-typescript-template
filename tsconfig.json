@@ -1,4 +1,5 @@
 {
+    "extends": "./tsconfig.alias.json",
     "compilerOptions": {
         "experimentalDecorators": true,
         "skipLibCheck": true,
@@ -11,13 +12,11 @@
         "noImplicitAny": false
     },
     "include": [
+        "./@types/*",
         "./src/**/*",
-        "node_modules/@girs/**/*",
     ],
     "exclude": [
-        "tsc-out"
-    ],
-    "files": [
-        "@types/global.d.ts",
+        "./tsc-out",
+        "./@types/*-ambient.d.ts"
     ]
 }

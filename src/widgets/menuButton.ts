@@ -1,5 +1,5 @@
-import Adw from "gi://Adw";
-import GObject from "gi://GObject";
+import Adw from "gi://Adw?version=1";
+import GObject from "gi://GObject?version=2.0";
 import { ThemeSwitcher } from "./themeSwitcher.js";
 
 export class MenuButton extends Adw.Bin {

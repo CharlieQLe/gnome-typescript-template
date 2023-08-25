@@ -1,6 +1,6 @@
-import Adw from "gi://Adw";
-import Gio from "gi://Gio";
-import GObject from "gi://GObject";
+import Adw from "gi://Adw?version=1";
+import Gio from "gi://Gio?version=2.0";
+import GObject from "gi://GObject?version=2.0";
 import Gtk from "gi://Gtk?version=4.0";
 
 export class ThemeSwitcher extends Adw.Bin {

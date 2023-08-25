@@ -7,5 +7,5 @@ fi
 
 flatpak --user install \
     org.freedesktop.Sdk.Extension.node18//22.08 \
-    org.gnome.Platform//44 \
-    org.gnome.Sdk//44;
+    org.gnome.Platform//master \
+    org.gnome.Sdk//master;
